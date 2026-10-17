@@ -189,7 +189,6 @@
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100">
                     <div class="aspect-video bg-sky-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-sky-200">
                         <i class="fa-solid fa-play text-5xl text-sky-300 absolute z-0 animate-pulse"></i>
-                        <!-- Replace src with your actual video link, e.g., src="my-edit-1.mp4" -->
                         <video controls class="w-full h-full object-cover relative z-10" poster="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80">
                             <source src="lv_7534194593168985397_20260920133431.mp4" type="video/mp4">
                             Your browser does not support the video tag.
@@ -203,7 +202,6 @@
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-pink-50/60">
                     <div class="aspect-video bg-pink-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-pink-200">
                         <i class="fa-solid fa-play text-5xl text-pink-300 absolute z-0 animate-pulse"></i>
-                        <!-- Replace src with your actual video link, e.g., src="my-edit-2.mp4" -->
                         <video controls class="w-full h-full object-cover relative z-10" poster="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80">
                             <source src="lv_7677856459220241684_20260920130210.mp4" type="video/mp4">
                             Your browser does not support the video tag.
@@ -342,46 +340,8 @@
             loadMemories();
         });
 
-        // --- LOCAL DATABASE LOGIC (INDEXEDDB) ---
-        // Bypassing Firebase completely to avoid 1MB document limits for videos and permission errors.
-        const DB_NAME = 'DrishtiMemoriesDB';
-        const STORE_NAME = 'memories';
-
-        function initDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, 1);
-                request.onupgradeneeded = (e) => {
-                    const db = e.target.result;
-                    if (!db.objectStoreNames.contains(STORE_NAME)) {
-                        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-                    }
-                };
-                request.onsuccess = () => resolve(request.result);
-                request.onerror = () => reject(request.error);
-            });
-        }
-
-        async function saveMemoryLocal(memory) {
-            const db = await initDB();
-            return new Promise((resolve, reject) => {
-                const tx = db.transaction(STORE_NAME, 'readwrite');
-                const store = tx.objectStore(STORE_NAME);
-                store.put(memory);
-                tx.oncomplete = () => resolve();
-                tx.onerror = () => reject(tx.error);
-            });
-        }
-
-        async function loadMemoriesLocal() {
-            const db = await initDB();
-            return new Promise((resolve, reject) => {
-                const tx = db.transaction(STORE_NAME, 'readonly');
-                const store = tx.objectStore(STORE_NAME);
-                const request = store.getAll();
-                request.onsuccess = () => resolve(request.result);
-                request.onerror = () => reject(request.error);
-            });
-        }
+        // --- GOOGLE APPS SCRIPT API CONNECTION ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby3b40rRkxv1Jo4bDwtk4lAzTiBrhSyI6nyfCLNn_Ga6Ez7Fvpti7_huxfX5yGg3OT8/exec';
 
         // --- MODAL & UI LOGIC ---
         const modal = document.getElementById('memoryModal');
@@ -553,24 +513,44 @@
             saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
             try {
-                const newMemory = {
+                // Parse base64 and mime type if it's an uploaded file
+                let base64Data = "";
+                let mimeType = "";
+                
+                if (currentMode === 'upload') {
+                    const parts = finalUrl.split(';');
+                    mimeType = parts[0].split(':')[1];
+                    base64Data = parts[1].split(',')[1];
+                }
+
+                // Construct payload for Apps Script
+                const payload = {
                     id: Date.now().toString(),
-                    url: finalUrl,
                     type: finalType,
                     caption: caption,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
+                    isFile: currentMode === 'upload',
+                    mimeType: mimeType,
+                    fileData: base64Data, // Excludes the 'data:image/jpeg;base64,' prefix
+                    url: finalUrl // Send URL if it's just a pasted link
                 };
                 
-                await saveMemoryLocal(newMemory);
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("Upload failed");
 
                 closeModal();
-                loadMemories(); // Refresh the gallery locally
+                loadMemories(); // Refresh the gallery from the remote server
+                
                 saveBtn.disabled = false;
                 saveBtn.innerHTML = originalBtnHtml;
 
             } catch (err) {
                 console.error("Error saving memory:", err);
-                showAlert("Failed to save memory. If it's a super massive video, try compressing it slightly.");
+                showAlert("Failed to save memory. Check your connection or try a smaller file.");
                 saveBtn.disabled = false;
                 saveBtn.innerHTML = originalBtnHtml;
             }
@@ -578,18 +558,29 @@
 
         async function loadMemories() {
             try {
-                const memories = await loadMemoriesLocal();
+                // Fetch the list of memories from your Apps Script
+                const response = await fetch(SCRIPT_URL);
+                if (!response.ok) throw new Error("Failed to load from remote");
                 
-                // Sort in memory by timestamp descending
+                // Assuming your Apps Script returns a JSON array of saved memories
+                const memories = await response.json();
+                
+                // Sort by timestamp descending
                 memories.sort((a, b) => b.timestamp - a.timestamp);
                 
                 renderGallery(memories);
             } catch (error) {
                 console.error("Error fetching memories:", error);
-                document.getElementById('loadingMemories').innerHTML = `
-                    <div class="text-red-400"><i class="fa-solid fa-circle-xmark text-3xl mb-2"></i></div>
-                    <p>Failed to load memories.</p>
-                `;
+                
+                // Fallback UI if it fails or if the array is empty/not returned properly
+                const gallery = document.getElementById('memoriesGallery');
+                if(gallery.children.length <= 1) { // If it only has the loading div
+                     document.getElementById('loadingMemories').innerHTML = `
+                        <div class="text-sky-400"><i class="fa-solid fa-cloud text-3xl mb-2"></i></div>
+                        <p>Waiting for memories...</p>
+                        <p class="text-sm mt-2 text-slate-500">(Make sure your Google App Script allows GET requests)</p>
+                    `;
+                }
             }
         }
 
@@ -597,7 +588,7 @@
             const gallery = document.getElementById('memoriesGallery');
             gallery.innerHTML = ""; 
 
-            if (memories.length === 0) {
+            if (!memories || memories.length === 0) {
                 gallery.innerHTML = `
                     <div class="col-span-full text-center py-12 glass-panel rounded-3xl border-dashed border-2 border-sky-200">
                         <i class="fa-solid fa-images text-5xl mb-4 text-sky-300"></i>
