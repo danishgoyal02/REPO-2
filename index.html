@@ -12,7 +12,6 @@
     <style>
         body {
             font-family: 'Quicksand', sans-serif;
-            /* Dominant Blue theme with a very subtle hint of pink/purple */
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 40%, #f3e8ff 70%, #bfdbfe 100%);
             background-attachment: fixed;
             min-height: 100vh;
@@ -25,7 +24,6 @@
             font-family: 'Dancing Script', cursive;
         }
 
-        /* Floating animations for stickers */
         @keyframes float {
             0% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(5deg); }
@@ -50,7 +48,6 @@
         }
         .heartbeat { animation: heartbeat 2s infinite; }
 
-        /* Glassmorphism for cards and navbar */
         .glass-panel {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(12px);
@@ -59,13 +56,11 @@
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #e0f2fe; }
         ::-webkit-scrollbar-thumb { background: #7dd3fc; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
 
-        /* Page transition styles */
         .page-section {
             display: none;
             animation: fadeIn 0.5s ease-out forwards;
@@ -80,7 +75,7 @@
         }
 
         .nav-link.active {
-            color: #0369a1; /* Sky 800 */
+            color: #0369a1;
             border-bottom: 2px solid #0369a1;
             font-weight: 700;
         }
@@ -110,13 +105,10 @@
         </div>
     </nav>
 
-    <!-- Main Content Area -->
     <main class="relative z-10 container mx-auto px-4 pt-28 pb-12 min-h-screen">
-        
         <section id="home" class="page-section active">
             <div class="flex flex-col items-center justify-center min-h-[70vh] text-center">
                 <div class="glass-panel p-8 md:p-12 rounded-[3rem] max-w-3xl w-full relative">
-                    <!-- Subtle pink decorative circle -->
                     <div class="absolute -top-6 -right-6 w-20 h-20 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
                     <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-sky-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse delay-700"></div>
                     
@@ -142,7 +134,6 @@
             <h2 class="text-5xl text-center text-sky-800 mb-12 drop-shadow-sm">all i can sayy💌</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- Note 1 -->
                 <div class="glass-panel rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-16 h-16 bg-sky-200 rounded-bl-full opacity-50"></div>
                     <div class="text-sky-500 text-3xl mb-4"><i class="fa-solid fa-quote-left"></i></div>
@@ -153,7 +144,6 @@
                     <div class="text-right text-pink-500 text-2xl cursive-text border-t border-sky-100 pt-4">- Yours Truly 💙</div>
                 </div>
                 
-                <!-- Note 2 (Accent) -->
                 <div class="glass-panel rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 bg-gradient-to-br from-white/40 to-sky-100/60 relative shadow-xl shadow-sky-100">
                     <div class="text-pink-400 text-3xl mb-4"><i class="fa-solid fa-cat"></i></div>
                     <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80" alt="Cute Cat" class="w-full h-48 object-cover rounded-xl mb-4 shadow-sm">
@@ -164,7 +154,6 @@
                     <div class="text-right text-sky-600 text-2xl cursive-text border-t border-sky-200 pt-4">- Forever 🐾</div>
                 </div>
 
-                <!-- Note 3 -->
                 <div class="glass-panel rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
                     <div class="absolute bottom-0 left-0 w-16 h-16 bg-pink-100 rounded-tr-full opacity-50"></div>
                     <div class="text-sky-500 text-3xl mb-4"><i class="fa-solid fa-dog"></i></div>
@@ -185,7 +174,6 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <!-- Edit 1 -->
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100">
                     <div class="aspect-video bg-sky-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-sky-200">
                         <i class="fa-solid fa-play text-5xl text-sky-300 absolute z-0 animate-pulse"></i>
@@ -198,7 +186,6 @@
                     <p class="text-slate-600 font-medium">Just a little edit I made of some of my favorite moments with you.</p>
                 </div>
                 
-                <!-- Edit 2 -->
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-pink-50/60">
                     <div class="aspect-video bg-pink-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-pink-200">
                         <i class="fa-solid fa-play text-5xl text-pink-300 absolute z-0 animate-pulse"></i>
@@ -230,23 +217,19 @@
                 </button>
             </div>
             
-            <!-- Gallery Grid -->
             <div id="memoriesGallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Loading State -->
                 <div id="loadingMemories" class="col-span-full text-center py-12 glass-panel rounded-3xl text-sky-600">
                     <i class="fa-solid fa-spinner fa-spin text-4xl mb-4 text-sky-400"></i>
                     <p class="text-lg font-medium">Loading our beautiful moments...</p>
                 </div>
             </div>
 
-            <!-- Next Button -->
             <div class="mt-12 flex justify-center">
                 <button onclick="window.location.hash='home'" class="bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-sky-200 transform hover:scale-105 transition-all text-lg flex items-center gap-2">
                     Next <i class="fa-solid fa-house"></i>
                 </button>
             </div>
         </section>
-
     </main>
 
     <div id="memoryModal" class="fixed inset-0 bg-sky-900/40 z-50 hidden flex justify-center items-center backdrop-blur-md px-4 opacity-0 transition-opacity duration-300">
@@ -258,13 +241,11 @@
             
             <div class="p-6 overflow-y-auto custom-scrollbar">
                 <form id="memoryForm" class="space-y-5">
-                    <!-- Option Tabs -->
                     <div class="flex gap-2 bg-sky-50 p-1.5 rounded-2xl">
                         <button type="button" id="tabUpload" class="flex-1 py-2.5 rounded-xl bg-white shadow-sm font-semibold text-sky-600 transition-all text-sm">Upload Photo</button>
                         <button type="button" id="tabLink" class="flex-1 py-2.5 rounded-xl text-slate-500 hover:text-sky-600 transition-all text-sm">Paste Link</button>
                     </div>
 
-                    <!-- Upload Image Section -->
                     <div id="uploadSection" class="space-y-4">
                         <div class="relative border-2 border-dashed border-sky-200 rounded-2xl p-6 text-center hover:bg-sky-50 transition-colors">
                             <input type="file" id="imageInput" accept="image/*, video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
@@ -278,7 +259,6 @@
                         </div>
                     </div>
 
-                    <!-- Link Section -->
                     <div id="linkSection" class="space-y-4 hidden">
                         <div>
                             <label class="block text-sm font-bold text-sky-800 mb-1.5">Media URL</label>
@@ -293,13 +273,11 @@
                         </div>
                     </div>
 
-                    <!-- Description -->
                     <div>
                         <label class="block text-sm font-bold text-sky-800 mb-1.5">Sweet Note / Caption</label>
                         <textarea id="memoryCaption" rows="3" placeholder="Remember when we..." class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-pink-300 focus:border-pink-300 outline-none transition-all resize-none bg-sky-50/50"></textarea>
                     </div>
 
-                    <!-- Custom Alert Box -->
                     <div id="formAlert" class="hidden rounded-xl p-3 text-sm font-medium text-center"></div>
 
                     <button type="submit" id="saveMemoryBtn" class="w-full bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-sky-200 hover:shadow-xl hover:-translate-y-0.5 transition-all">
@@ -311,39 +289,31 @@
     </div>
 
     <script type="module">
-        // --- ROUTING LOGIC ---
         function handleRouting() {
             const hash = window.location.hash || '#home';
             const pageId = hash.substring(1);
             
-            // Validate route, default to home
             const validPages = ['home', 'notes', 'edits', 'memories'];
             const targetPage = validPages.includes(pageId) ? pageId : 'home';
 
-            // Hide all sections, remove active class from navs
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
 
-            // Show target section, add active class to corresponding nav
             document.getElementById(targetPage).classList.add('active');
             const activeNav = document.querySelector(`.nav-link[href="#${targetPage}"]`);
             if(activeNav) activeNav.classList.add('active');
             
-            // Scroll to top on page change
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Listen for hash changes and initialize
         window.addEventListener('hashchange', handleRouting);
         window.addEventListener('DOMContentLoaded', () => {
             handleRouting();
             loadMemories();
         });
 
-        // --- GOOGLE APPS SCRIPT API CONNECTION ---
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby3b40rRkxv1Jo4bDwtk4lAzTiBrhSyI6nyfCLNn_Ga6Ez7Fvpti7_huxfX5yGg3OT8/exec';
 
-        // --- MODAL & UI LOGIC ---
         const modal = document.getElementById('memoryModal');
         const addMemoryBtn = document.getElementById('addMemoryBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -392,7 +362,6 @@
 
         function openModal() {
             modal.classList.remove('hidden');
-            // Small delay to allow display:block to apply before changing opacity for transition
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
 
@@ -406,7 +375,7 @@
                 document.getElementById('videoPreview').classList.add('hidden');
                 uploadedMediaUrl = null;
                 hideAlert();
-            }, 300); // match transition duration
+            }, 300);
         }
 
         addMemoryBtn.addEventListener('click', openModal);
@@ -469,7 +438,6 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // Compress aggressively so it securely stores in database limits
                         uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.5);
                         videoPreview.classList.add('hidden');
                         imagePreview.src = uploadedMediaUrl;
@@ -513,7 +481,6 @@
             saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
             try {
-                // Parse base64 and mime type if it's an uploaded file
                 let base64Data = "";
                 let mimeType = "";
                 
@@ -523,7 +490,6 @@
                     base64Data = parts[1].split(',')[1];
                 }
 
-                // Construct payload for Apps Script
                 const payload = {
                     id: Date.now().toString(),
                     type: finalType,
@@ -531,19 +497,22 @@
                     timestamp: Date.now(),
                     isFile: currentMode === 'upload',
                     mimeType: mimeType,
-                    fileData: base64Data, // Excludes the 'data:image/jpeg;base64,' prefix
-                    url: finalUrl // Send URL if it's just a pasted link
+                    fileData: base64Data, 
+                    url: finalUrl 
                 };
                 
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(payload),
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    }
                 });
 
                 if (!response.ok) throw new Error("Upload failed");
 
                 closeModal();
-                loadMemories(); // Refresh the gallery from the remote server
+                loadMemories(); 
                 
                 saveBtn.disabled = false;
                 saveBtn.innerHTML = originalBtnHtml;
@@ -558,23 +527,16 @@
 
         async function loadMemories() {
             try {
-                // Fetch the list of memories from your Apps Script
                 const response = await fetch(SCRIPT_URL);
                 if (!response.ok) throw new Error("Failed to load from remote");
                 
-                // Assuming your Apps Script returns a JSON array of saved memories
                 const memories = await response.json();
-                
-                // Sort by timestamp descending
                 memories.sort((a, b) => b.timestamp - a.timestamp);
-                
                 renderGallery(memories);
             } catch (error) {
                 console.error("Error fetching memories:", error);
-                
-                // Fallback UI if it fails or if the array is empty/not returned properly
                 const gallery = document.getElementById('memoriesGallery');
-                if(gallery.children.length <= 1) { // If it only has the loading div
+                if(gallery.children.length <= 1) { 
                      document.getElementById('loadingMemories').innerHTML = `
                         <div class="text-sky-400"><i class="fa-solid fa-cloud text-3xl mb-2"></i></div>
                         <p>Waiting for memories...</p>
