@@ -288,7 +288,13 @@
         </div>
     </div>
 
-    <script type="module">
+    <script>
+        // CRASH DETECTOR: If anything fails, it pops up an alert so we instantly know why.
+        window.onerror = function(message, source, lineno, colno, error) {
+            alert("CRASH DETECTED!\nLine: " + lineno + "\nError: " + message);
+            return true; 
+        };
+
         function handleRouting() {
             const hash = window.location.hash || '#home';
             const pageId = hash.substring(1);
@@ -299,7 +305,9 @@
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
 
-            document.getElementById(targetPage).classList.add('active');
+            const targetEl = document.getElementById(targetPage);
+            if(targetEl) targetEl.classList.add('active');
+            
             const activeNav = document.querySelector(`.nav-link[href="#${targetPage}"]`);
             if(activeNav) activeNav.classList.add('active');
             
@@ -312,7 +320,7 @@
             loadMemories();
         });
 
-        // Updated with your latest working App Script URL
+        // The working App Script URL
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG9tRUtVcunB_TBZ6ru-AP6bigYwoLyU5IZQa6lMUq6o0a64O2WjCVgtlYISoDZsyv/exec';
 
         const modal = document.getElementById('memoryModal');
@@ -486,7 +494,6 @@
                 let mimeType = "";
                 
                 if (currentMode === 'upload') {
-                    // Extract base64 correctly
                     const parts = finalUrl.split(',');
                     if(parts.length > 1) {
                         mimeType = parts[0].split(':')[1].split(';')[0];
@@ -507,7 +514,7 @@
                 
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    redirect: 'follow', // Crucial fix for Apps Script redirects
+                    redirect: 'follow',
                     body: JSON.stringify(payload),
                     headers: {
                         'Content-Type': 'text/plain;charset=utf-8'
@@ -530,7 +537,6 @@
 
         async function loadMemories() {
             try {
-                // Add timestamp to prevent browser from loading an old cached version
                 const response = await fetch(SCRIPT_URL + "?t=" + new Date().getTime(), {
                     redirect: 'follow'
                 });
@@ -541,7 +547,7 @@
             } catch (error) {
                 console.error("Error fetching memories:", error);
                 const gallery = document.getElementById('memoriesGallery');
-                if(gallery.children.length <= 1) { 
+                if(gallery && gallery.children.length <= 1) { 
                      document.getElementById('loadingMemories').innerHTML = `
                         <div class="text-sky-400"><i class="fa-solid fa-cloud text-3xl mb-2"></i></div>
                         <p>Waiting for memories...</p>
@@ -553,6 +559,8 @@
 
         function renderGallery(memories) {
             const gallery = document.getElementById('memoriesGallery');
+            if (!gallery) return;
+            
             gallery.innerHTML = ""; 
 
             if (!memories || memories.length === 0) {
@@ -571,16 +579,33 @@
                 card.className = "bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-sky-200/50 transition-all duration-300 transform hover:-translate-y-1 border border-white";
                 
                 let mediaHtml = "";
+                
                 if (mem.type === 'video') {
-                    mediaHtml = `
-                        <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
-                            <video src="${mem.url}" controls autoplay muted loop class="w-full h-full object-contain"></video>
-                        </div>
-                    `;
+                    let videoSrc = String(mem.url || ""); 
+                    let isDrive = videoSrc.includes('drive.google.com');
+                    
+                    if (isDrive) {
+                        const idMatch = videoSrc.match(/id=([a-zA-Z0-9_-]+)/) || videoSrc.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                        if (idMatch && idMatch[1]) {
+                            videoSrc = `https://drive.google.com/file/d/${idMatch[1]}/preview`;
+                        }
+                        mediaHtml = `
+                            <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative w-full overflow-hidden">
+                                <iframe src="${videoSrc}" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen"></iframe>
+                            </div>
+                        `;
+                    } else {
+                        mediaHtml = `
+                            <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
+                                <video src="${videoSrc}" controls class="w-full h-full object-contain"></video>
+                            </div>
+                        `;
+                    }
                 } else {
+                    let imgSrc = String(mem.url || "https://placehold.co/400x500/bae6fd/0369a1?text=Memory");
                     mediaHtml = `
                         <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
-                            <img src="${mem.url}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="${imgSrc}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
                     `;
@@ -595,6 +620,12 @@
                 
                 gallery.appendChild(card);
             });
+        }
+        
+        // Final safety check to run routing if DOM is already loaded
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            handleRouting();
+            loadMemories();
         }
     </script>
 </body>
