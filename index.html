@@ -551,7 +551,7 @@
             }
         }
 
-        function renderGallery(memories) {
+     function renderGallery(memories) {
             const gallery = document.getElementById('memoriesGallery');
             gallery.innerHTML = ""; 
 
@@ -572,12 +572,30 @@
                 
                 let mediaHtml = "";
                 if (mem.type === 'video') {
-                    mediaHtml = `
-                        <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
-                            <video src="${mem.url}" controls autoplay muted loop class="w-full h-full object-contain"></video>
-                        </div>
-                    `;
+                    let videoSrc = mem.url;
+                    let isDrive = videoSrc.includes('drive.google.com');
+                    
+                    // If it's a Google Drive video, convert the link to use Google's native video player
+                    if (isDrive) {
+                        const idMatch = videoSrc.match(/id=([a-zA-Z0-9_-]+)/);
+                        if (idMatch) {
+                            videoSrc = `https://drive.google.com/file/d/${idMatch[1]}/preview`;
+                        }
+                        mediaHtml = `
+                            <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative w-full overflow-hidden">
+                                <iframe src="${videoSrc}" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen"></iframe>
+                            </div>
+                        `;
+                    } else {
+                        // For regular external video links
+                        mediaHtml = `
+                            <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
+                                <video src="${videoSrc}" controls class="w-full h-full object-contain"></video>
+                            </div>
+                        `;
+                    }
                 } else {
+                    // For images
                     mediaHtml = `
                         <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
                             <img src="${mem.url}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -585,6 +603,17 @@
                         </div>
                     `;
                 }
+
+                card.innerHTML = `
+                    ${mediaHtml}
+                    <div class="p-4 bg-white">
+                        <p class="text-slate-700 font-medium text-sm">${mem.caption || "A sweet moment 💙"}</p>
+                    </div>
+                `;
+                
+                gallery.appendChild(card);
+            });
+        }
 
                 card.innerHTML = `
                     ${mediaHtml}
