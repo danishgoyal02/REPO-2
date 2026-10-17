@@ -3,356 +3,640 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drishti's 18th Birthday</title>
+    <title>Happy 18th drishtuuuu 💙</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f9ff; /* Blue-50 */
+            font-family: 'Quicksand', sans-serif;
+            /* Dominant Blue theme with a very subtle hint of pink/purple */
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 40%, #f3e8ff 70%, #bfdbfe 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
-        h1, h2, h3, .serif-font {
-            font-family: 'Playfair Display', serif;
+        
+        h1, h2, h3, .cursive-text {
+            font-family: 'Dancing Script', cursive;
         }
-        .page {
+
+        /* Floating animations for stickers */
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        @keyframes float-reverse {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .floating { animation: float 5s ease-in-out infinite; }
+        .floating-delay { animation: float-reverse 6s ease-in-out infinite; }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        .heartbeat { animation: heartbeat 2s infinite; }
+
+        /* Glassmorphism for cards and navbar */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e0f2fe; }
+        ::-webkit-scrollbar-thumb { background: #7dd3fc; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+
+        /* Page transition styles */
+        .page-section {
             display: none;
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.5s ease-out forwards;
         }
-        .page.active {
+        .page-section.active {
             display: block;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        .modal-overlay {
-            display: none;
-            animation: fadeIn 0.3s ease-out;
-        }
-        .modal-overlay.active {
-            display: flex;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        #toast {
-            transition: opacity 0.3s, transform 0.3s;
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-        }
-        #toast.show {
-            opacity: 1;
-            transform: translateY(0);
+
+        .nav-link.active {
+            color: #0369a1; /* Sky 800 */
+            border-bottom: 2px solid #0369a1;
+            font-weight: 700;
         }
     </style>
 </head>
-<body class="text-blue-900 min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="text-slate-800">
 
-    <!-- Navbar -->
-    <nav class="glass-panel sticky top-0 z-40 w-full shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold serif-font text-blue-800">Drishti<span class="text-blue-400">'s 18th</span></div>
-            <div class="flex gap-6">
-                <button onclick="nav('home')" class="nav-btn text-blue-700 hover:text-blue-900 font-medium transition-colors" data-target="home">Home</button>
-                <button onclick="nav('memories')" class="nav-btn text-blue-700 hover:text-blue-900 font-medium transition-colors" data-target="memories">Memories</button>
+    <div class="fixed top-20 left-10 text-6xl floating opacity-70 z-0 pointer-events-none">🐱</div>
+    <div class="fixed top-40 right-16 text-6xl floating-delay opacity-70 z-0 pointer-events-none">🐶</div>
+    <div class="fixed bottom-32 left-20 text-5xl floating opacity-70 z-0 pointer-events-none">🐾</div>
+    <div class="fixed bottom-20 right-10 text-6xl floating-delay opacity-70 z-0 pointer-events-none">🐈</div>
+    <div class="fixed top-1/3 left-3/4 text-6xl floating opacity-60 z-0 pointer-events-none">🐕</div>
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b-0">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold cursive-text text-sky-800 flex items-center gap-2">
+                    drishtuu <span class="text-pink-400 text-xl">🎀</span>
+                </div>
+                <ul class="flex gap-6 md:gap-8 text-sm md:text-base font-semibold text-sky-600">
+                    <li><a href="#home" class="nav-link active transition-colors hover:text-sky-800 pb-1">Home</a></li>
+                    <li><a href="#notes" class="nav-link transition-colors hover:text-sky-800 pb-1">Notes</a></li>
+                    <li><a href="#edits" class="nav-link transition-colors hover:text-sky-800 pb-1">Edits</a></li>
+                    <li><a href="#memories" class="nav-link transition-colors hover:text-sky-800 pb-1">Memories</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-8 relative">
+    <!-- Main Content Area -->
+    <main class="relative z-10 container mx-auto px-4 pt-28 pb-12 min-h-screen">
         
-        <!-- Home Page -->
-        <div id="home" class="page active">
+        <section id="home" class="page-section active">
             <div class="flex flex-col items-center justify-center min-h-[70vh] text-center">
-                <div class="w-32 h-32 bg-blue-200 rounded-full flex items-center justify-center mb-8 shadow-lg shadow-blue-200/50">
-                    <span class="text-5xl">🦋</span>
+                <div class="glass-panel p-8 md:p-12 rounded-[3rem] max-w-3xl w-full relative">
+                    <!-- Subtle pink decorative circle -->
+                    <div class="absolute -top-6 -right-6 w-20 h-20 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                    <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-sky-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse delay-700"></div>
+                    
+                    <h1 class="text-6xl md:text-8xl text-sky-700 mb-6 drop-shadow-sm relative z-10">
+                        Happy 18th, <br/> My drishtuu 
+                        <span class="inline-block heartbeat text-pink-500 text-5xl md:text-7xl">💖</span>
+                    </h1>
+                    
+                    <p class="text-xl md:text-2xl text-slate-700 font-medium leading-relaxed relative z-10">
+                        Welcome to adulthood,babyyy! 🦋 <br>
+                        You make every single day feel like a beautiful dream. 
+                        I created this little blue heaven just for us to celebrate you and everything you mean to me.
+                    </p>
+                    
+                    <button onclick="window.location.hash='notes'" class="mt-8 bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-sky-200 transform hover:scale-105 transition-all text-lg">
+                        Read My Notes <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
                 </div>
-                <h1 class="text-5xl md:text-7xl font-bold text-blue-900 mb-6 drop-shadow-sm">
-                    Happy 18th, Drishti!
-                </h1>
-                <p class="text-lg md:text-xl text-blue-700 max-w-2xl leading-relaxed mb-10">
-                    Welcome to your special birthday space. Eighteen is a beautiful milestone—a time for new beginnings, big dreams, and unforgettable memories. We've gathered some of our favorite moments with you right here.
-                </p>
-                <button onclick="nav('memories')" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1">
-                    View Memories Gallery
+            </div>
+        </section>
+
+        <section id="notes" class="page-section">
+            <h2 class="text-5xl text-center text-sky-800 mb-12 drop-shadow-sm">all i can sayy💌</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Note 1 -->
+                <div class="glass-panel rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-sky-200 rounded-bl-full opacity-50"></div>
+                    <div class="text-sky-500 text-3xl mb-4"><i class="fa-solid fa-quote-left"></i></div>
+                    <h3 class="text-2xl text-sky-900 mb-2 font-bold">To My pasandida auratt</h3>
+                    <p class="text-lg leading-relaxed mb-6 text-slate-700">
+                        Happyyy 18th!babyyy Watching you grow and become this amazing, beautiful person has been the best part of my life. Your kindness inspire me daily. I can't wait to see all the incredible things you'll achieve.
+                    </p>
+                    <div class="text-right text-pink-500 text-2xl cursive-text border-t border-sky-100 pt-4">- Yours Truly 💙</div>
+                </div>
+                
+                <!-- Note 2 (Accent) -->
+                <div class="glass-panel rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 bg-gradient-to-br from-white/40 to-sky-100/60 relative shadow-xl shadow-sky-100">
+                    <div class="text-pink-400 text-3xl mb-4"><i class="fa-solid fa-cat"></i></div>
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80" alt="Cute Cat" class="w-full h-48 object-cover rounded-xl mb-4 shadow-sm">
+                    <h3 class="text-2xl text-sky-900 mb-2 font-bold">My Cute billuu 🐱</h3>
+                    <p class="text-lg leading-relaxed mb-6 text-slate-700">
+                        You make every day brighter just by beingggg in it. Just like this adorable kitty, your smile is my absolute favorite thing. Here's to making a million more beautiful memories!
+                    </p>
+                    <div class="text-right text-sky-600 text-2xl cursive-text border-t border-sky-200 pt-4">- Forever 🐾</div>
+                </div>
+
+                <!-- Note 3 -->
+                <div class="glass-panel rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
+                    <div class="absolute bottom-0 left-0 w-16 h-16 bg-pink-100 rounded-tr-full opacity-50"></div>
+                    <div class="text-sky-500 text-3xl mb-4"><i class="fa-solid fa-dog"></i></div>
+                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400&q=80" alt="Cute Dog" class="w-full h-48 object-cover rounded-xl mb-4 shadow-sm">
+                    <h3 class="text-2xl text-sky-900 mb-2 font-bold"> last but not leastt🐶</h3>
+                    <p class="text-lg leading-relaxed mb-6 text-slate-700">
+                        To the most beautiful girll i ever mett May your 18th birthday be exactly as special and perfect as you are to me. I promise to always be by your side.
+                    </p>
+                    <div class="text-right text-pink-500 text-2xl cursive-text border-t border-sky-100 pt-4">- Always ✨</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="edits" class="page-section">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl text-sky-800 drop-shadow-sm mb-4">Little Movies of Us 🎬</h2>
+                <p class="text-xl text-sky-600 font-medium max-w-2xl mx-auto">I made these special little edits just for you. Hope they make you smile! 💙</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Edit 1 -->
+                <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100">
+                    <div class="aspect-video bg-sky-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-sky-200">
+                        <i class="fa-solid fa-play text-5xl text-sky-300 absolute z-0 animate-pulse"></i>
+                        <!-- Replace src with your actual video link, e.g., src="my-edit-1.mp4" -->
+                        <video controls class="w-full h-full object-cover relative z-10" poster="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80">
+                            <source src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h3 class="text-2xl text-sky-900 mb-2 font-bold cursive-text">You & Me ✨</h3>
+                    <p class="text-slate-600 font-medium">Just a little edit I made of some of my favorite moments with you.</p>
+                </div>
+                
+                <!-- Edit 2 -->
+                <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-pink-50/60">
+                    <div class="aspect-video bg-pink-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-pink-200">
+                        <i class="fa-solid fa-play text-5xl text-pink-300 absolute z-0 animate-pulse"></i>
+                        <!-- Replace src with your actual video link, e.g., src="my-edit-2.mp4" -->
+                        <video controls class="w-full h-full object-cover relative z-10" poster="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80">
+                            <source src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h3 class="text-2xl text-sky-900 mb-2 font-bold cursive-text">Happy 18th 💖</h3>
+                    <p class="text-slate-600 font-medium">To celebrate the most amazing girlfriend turning 18 today!</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 flex justify-center">
+                <button onclick="window.location.hash='memories'" class="bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-sky-200 transform hover:scale-105 transition-all text-lg flex items-center gap-2">
+                    See Our Memories <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </div>
-        </div>
+        </section>
 
-        <!-- Memories Page -->
-        <div id="memories" class="page">
-            <div class="flex justify-between items-end mb-8 mt-4">
+        <section id="memories" class="page-section">
+            <div class="flex justify-between items-center mb-10 flex-wrap gap-4 glass-panel p-6 rounded-3xl">
                 <div>
-                    <h2 class="text-4xl font-bold serif-font text-blue-900">Our Memories</h2>
-                    <p class="text-blue-600 mt-2">A collection of beautiful moments.</p>
+                    <h2 class="text-4xl md:text-5xl text-sky-800 drop-shadow-sm mb-2">Our Memories 📸</h2>
+                    <p class="text-sky-600 font-medium">A collection of our favorite moments together.</p>
                 </div>
-                <!-- Add Memory Button -->
-                <button onclick="openModal()" class="bg-pink-500 hover:bg-pink-600 text-white px-5 py-2.5 rounded-full font-medium shadow-md transition-colors flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                    </svg>
-                    Add Memory
+                <button id="addMemoryBtn" class="bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-sky-200 transform hover:scale-105 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Add Memory
                 </button>
             </div>
-
+            
             <!-- Gallery Grid -->
-            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 pb-20">
-                <!-- Pre-existing Memory Cards (Placeholders) -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-blue-100">
-                    <img src="https://placehold.co/600x400/bfdbfe/1e3a8a?text=Birthday+Party" class="w-full h-48 object-cover" alt="Memory">
-                    <div class="p-4">
-                        <p class="text-blue-800 font-medium">Sweet 16 Party</p>
-                        <p class="text-blue-500 text-sm mt-1">Unforgettable night!</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-blue-100">
-                    <img src="https://placehold.co/600x400/93c5fd/1e3a8a?text=Trip+to+Mountains" class="w-full h-48 object-cover" alt="Memory">
-                    <div class="p-4">
-                        <p class="text-blue-800 font-medium">Summer Trip</p>
-                        <p class="text-blue-500 text-sm mt-1">Hiking and good times.</p>
-                    </div>
+            <div id="memoriesGallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Loading State -->
+                <div id="loadingMemories" class="col-span-full text-center py-12 glass-panel rounded-3xl text-sky-600">
+                    <i class="fa-solid fa-spinner fa-spin text-4xl mb-4 text-sky-400"></i>
+                    <p class="text-lg font-medium">Loading our beautiful moments...</p>
                 </div>
             </div>
-        </div>
+
+            <!-- Next Button -->
+            <div class="mt-12 flex justify-center">
+                <button onclick="window.location.hash='home'" class="bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-sky-200 transform hover:scale-105 transition-all text-lg flex items-center gap-2">
+                    Next <i class="fa-solid fa-house"></i>
+                </button>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Add Memory Modal -->
-    <div id="memoryModal" class="modal-overlay fixed inset-0 bg-blue-900/40 backdrop-blur-sm z-50 justify-center items-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
+    <div id="memoryModal" class="fixed inset-0 bg-sky-900/40 z-50 hidden flex justify-center items-center backdrop-blur-md px-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white/90 rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] border border-white">
+            <div class="bg-gradient-to-r from-sky-100 to-blue-50 p-6 flex justify-between items-center border-b border-sky-100">
+                <h3 class="text-3xl cursive-text font-bold text-sky-800">New Memory 🎀</h3>
+                <button id="closeModalBtn" class="text-sky-400 hover:text-sky-600 text-2xl transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            </div>
             
-            <!-- Modal Header -->
-            <div class="flex justify-between items-center p-5 border-b border-gray-100 bg-blue-50">
-                <h3 class="text-xl font-semibold serif-font text-blue-900">Add a New Memory</h3>
-                <button onclick="closeModal()" class="text-blue-400 hover:text-blue-700 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Modal Tabs -->
-            <div class="flex border-b border-gray-100">
-                <button onclick="switchTab('upload')" id="tab-btn-upload" class="flex-1 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition-colors">
-                    Upload File
-                </button>
-                <button onclick="switchTab('link')" id="tab-btn-link" class="flex-1 py-3 text-sm font-medium border-b-2 border-blue-600 text-blue-600 transition-colors">
-                    Paste Link
-                </button>
-            </div>
-
-            <!-- Modal Content -->
-            <div class="p-6 overflow-y-auto">
-                
-                <!-- Upload Tab (Mocked for UI completeness) -->
-                <div id="tab-upload" class="tab-content">
-                    <div class="border-2 border-dashed border-blue-200 rounded-xl p-8 flex flex-col items-center justify-center text-center bg-blue-50/50 hover:bg-blue-50 transition-colors cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                        </svg>
-                        <p class="text-blue-800 font-medium text-sm">Click to browse or drag file here</p>
-                        <p class="text-blue-500 text-xs mt-1">PNG, JPG, MP4 up to 50MB</p>
+            <div class="p-6 overflow-y-auto custom-scrollbar">
+                <form id="memoryForm" class="space-y-5">
+                    <!-- Option Tabs -->
+                    <div class="flex gap-2 bg-sky-50 p-1.5 rounded-2xl">
+                        <button type="button" id="tabUpload" class="flex-1 py-2.5 rounded-xl bg-white shadow-sm font-semibold text-sky-600 transition-all text-sm">Upload Photo</button>
+                        <button type="button" id="tabLink" class="flex-1 py-2.5 rounded-xl text-slate-500 hover:text-sky-600 transition-all text-sm">Paste Link</button>
                     </div>
-                    <p class="text-xs text-center text-gray-400 mt-4">Note: Direct upload requires a backend server. Please use the "Paste Link" tab for Google Drive links!</p>
-                </div>
 
-                <!-- Paste Link Tab (The Google Drive Smart Converter) -->
-                <div id="tab-link" class="tab-content active">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-blue-800 mb-1">Google Drive Link</label>
-                            <input type="text" id="memory-url" placeholder="https://drive.google.com/file/d/.../view" 
-                                class="w-full px-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-sm">
-                            <p class="text-xs text-blue-500 mt-1">Make sure access is set to "Anyone with the link".</p>
+                    <!-- Upload Image Section -->
+                    <div id="uploadSection" class="space-y-4">
+                        <div class="relative border-2 border-dashed border-sky-200 rounded-2xl p-6 text-center hover:bg-sky-50 transition-colors">
+                            <input type="file" id="imageInput" accept="image/*, video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-sky-400 mb-2"></i>
+                            <p class="text-sm font-semibold text-sky-700">Tap to select a photo or video</p>
+                            <p class="text-xs text-slate-400 mt-1">Photos and videos will be saved securely.</p>
                         </div>
-                        
+                        <div id="imagePreviewContainer" class="hidden rounded-2xl overflow-hidden border border-sky-100 h-48 flex items-center justify-center bg-slate-50 shadow-inner">
+                            <img id="imagePreview" src="" alt="Preview" class="max-h-full object-contain hidden">
+                            <video id="videoPreview" src="" controls class="max-h-full object-contain hidden"></video>
+                        </div>
+                    </div>
+
+                    <!-- Link Section -->
+                    <div id="linkSection" class="space-y-4 hidden">
                         <div>
-                            <label class="block text-sm font-medium text-blue-800 mb-1">Memory Type</label>
-                            <select id="memory-type" class="w-full px-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white text-sm">
-                                <option value="image">Image / Photo</option>
+                            <label class="block text-sm font-bold text-sky-800 mb-1.5">Media URL</label>
+                            <input type="url" id="mediaUrl" placeholder="https://..." class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-300 focus:border-sky-300 outline-none transition-all bg-sky-50/50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-sky-800 mb-1.5">Type</label>
+                            <select id="mediaType" class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50/50">
+                                <option value="image">Image</option>
                                 <option value="video">Video</option>
                             </select>
                         </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-blue-800 mb-1">Caption (Optional)</label>
-                            <input type="text" id="memory-caption" placeholder="A lovely day..." 
-                                class="w-full px-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-sm">
-                        </div>
-
-                        <button onclick="processAndAddMemory()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium shadow-sm transition-colors mt-2">
-                            Add to Gallery
-                        </button>
                     </div>
-                </div>
 
+                    <!-- Description -->
+                    <div>
+                        <label class="block text-sm font-bold text-sky-800 mb-1.5">Sweet Note / Caption</label>
+                        <textarea id="memoryCaption" rows="3" placeholder="Remember when we..." class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-pink-300 focus:border-pink-300 outline-none transition-all resize-none bg-sky-50/50"></textarea>
+                    </div>
+
+                    <!-- Custom Alert Box -->
+                    <div id="formAlert" class="hidden rounded-xl p-3 text-sm font-medium text-center"></div>
+
+                    <button type="submit" id="saveMemoryBtn" class="w-full bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-sky-200 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                        Save Memory 💙
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Custom Toast Notification -->
-    <div id="toast" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-xl z-[60] flex items-center gap-2">
-        <span id="toast-icon">✨</span>
-        <span id="toast-msg">Action completed!</span>
-    </div>
-
-    <script>
-        // --- Navigation Logic ---
-        function nav(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // Show target page
-            document.getElementById(pageId).classList.add('active');
+    <script type="module">
+        // --- ROUTING LOGIC ---
+        function handleRouting() {
+            const hash = window.location.hash || '#home';
+            const pageId = hash.substring(1);
             
-            // Update active state on nav buttons (visual only)
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if(btn.dataset.target === pageId) {
-                    btn.classList.add('text-blue-900', 'font-bold');
-                    btn.classList.remove('text-blue-700', 'font-medium');
-                } else {
-                    btn.classList.add('text-blue-700', 'font-medium');
-                    btn.classList.remove('text-blue-900', 'font-bold');
-                }
-            });
-            window.scrollTo(0,0);
-        }
-        
-        // Initialize nav styling
-        nav('home');
+            // Validate route, default to home
+            const validPages = ['home', 'notes', 'edits', 'memories'];
+            const targetPage = validPages.includes(pageId) ? pageId : 'home';
 
-        // --- Modal & Tab Logic ---
+            // Hide all sections, remove active class from navs
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+            // Show target section, add active class to corresponding nav
+            document.getElementById(targetPage).classList.add('active');
+            const activeNav = document.querySelector(`.nav-link[href="#${targetPage}"]`);
+            if(activeNav) activeNav.classList.add('active');
+            
+            // Scroll to top on page change
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Listen for hash changes and initialize
+        window.addEventListener('hashchange', handleRouting);
+        window.addEventListener('DOMContentLoaded', () => {
+            handleRouting();
+            loadMemories();
+        });
+
+        // --- LOCAL DATABASE LOGIC (INDEXEDDB) ---
+        // Bypassing Firebase completely to avoid 1MB document limits for videos and permission errors.
+        const DB_NAME = 'DrishtiMemoriesDB';
+        const STORE_NAME = 'memories';
+
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                    }
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function saveMemoryLocal(memory) {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                store.put(memory);
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+            });
+        }
+
+        async function loadMemoriesLocal() {
+            const db = await initDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readonly');
+                const store = tx.objectStore(STORE_NAME);
+                const request = store.getAll();
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // --- MODAL & UI LOGIC ---
+        const modal = document.getElementById('memoryModal');
+        const addMemoryBtn = document.getElementById('addMemoryBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const memoryForm = document.getElementById('memoryForm');
+        const formAlert = document.getElementById('formAlert');
+        
+        const tabUpload = document.getElementById('tabUpload');
+        const tabLink = document.getElementById('tabLink');
+        const uploadSection = document.getElementById('uploadSection');
+        const linkSection = document.getElementById('linkSection');
+        
+        let currentMode = 'upload'; 
+        
+        function showAlert(msg, isError = true) {
+            formAlert.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-sky-100', 'text-sky-700');
+            formAlert.classList.add(isError ? 'bg-red-100' : 'bg-sky-100');
+            formAlert.classList.add(isError ? 'text-red-700' : 'text-sky-700');
+            formAlert.innerText = msg;
+        }
+
+        function hideAlert() {
+            formAlert.classList.add('hidden');
+        }
+
+        tabUpload.addEventListener('click', () => {
+            currentMode = 'upload';
+            tabUpload.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
+            tabUpload.classList.remove('text-slate-500');
+            tabLink.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
+            tabLink.classList.add('text-slate-500');
+            uploadSection.classList.remove('hidden');
+            linkSection.classList.add('hidden');
+            hideAlert();
+        });
+
+        tabLink.addEventListener('click', () => {
+            currentMode = 'link';
+            tabLink.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
+            tabLink.classList.remove('text-slate-500');
+            tabUpload.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
+            tabUpload.classList.add('text-slate-500');
+            linkSection.classList.remove('hidden');
+            uploadSection.classList.add('hidden');
+            hideAlert();
+        });
+
         function openModal() {
-            document.getElementById('memoryModal').classList.add('active');
-            // Reset inputs
-            document.getElementById('memory-url').value = '';
-            document.getElementById('memory-caption').value = '';
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before changing opacity for transition
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
         }
 
         function closeModal() {
-            document.getElementById('memoryModal').classList.remove('active');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                memoryForm.reset();
+                document.getElementById('imagePreviewContainer').classList.add('hidden');
+                document.getElementById('imagePreview').classList.add('hidden');
+                document.getElementById('videoPreview').classList.add('hidden');
+                uploadedMediaUrl = null;
+                hideAlert();
+            }, 300); // match transition duration
         }
 
-        function switchTab(tabId) {
-            // Hide contents
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            // Reset button styles
-            document.getElementById('tab-btn-upload').className = "flex-1 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition-colors";
-            document.getElementById('tab-btn-link').className = "flex-1 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition-colors";
-            
-            // Activate selected
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            document.getElementById(`tab-btn-${tabId}`).className = "flex-1 py-3 text-sm font-medium border-b-2 border-blue-600 text-blue-600 transition-colors";
-        }
-
-        // Close modal if clicking outside the white box
-        document.getElementById('memoryModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
+        addMemoryBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
         });
 
-        // --- Custom Toast Notification (Replaces alert) ---
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-msg');
-            const toastIcon = document.getElementById('toast-icon');
+        let uploadedMediaUrl = null;
+        let uploadedMediaType = 'image';
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const videoPreview = document.getElementById('videoPreview');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+
+        imageInput.addEventListener('change', (e) => {
+            hideAlert();
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const isVideo = file.type.startsWith('video/');
+
+            if (isVideo) {
+                uploadedMediaType = 'video';
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    uploadedMediaUrl = event.target.result;
+                    imagePreview.classList.add('hidden');
+                    videoPreview.src = uploadedMediaUrl;
+                    videoPreview.classList.remove('hidden');
+                    imagePreviewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                uploadedMediaType = 'image';
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Compress aggressively so it securely stores in database limits
+                        uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.5);
+                        videoPreview.classList.add('hidden');
+                        imagePreview.src = uploadedMediaUrl;
+                        imagePreview.classList.remove('hidden');
+                        imagePreviewContainer.classList.remove('hidden');
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        memoryForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideAlert();
+
+            const caption = document.getElementById('memoryCaption').value.trim();
+            const saveBtn = document.getElementById('saveMemoryBtn');
+            const originalBtnHtml = saveBtn.innerHTML;
             
-            toastMsg.textContent = message;
-            toastIcon.textContent = isError ? '⚠️' : '✅';
-            toast.style.backgroundColor = isError ? '#ef4444' : '#10b981'; // Red for error, Green for success
+            let finalUrl = "";
+            let finalType = "image";
 
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
+            if (currentMode === 'upload') {
+                if (!uploadedMediaUrl) {
+                    showAlert("Please select a photo or video to upload!");
+                    return;
+                }
+                finalUrl = uploadedMediaUrl;
+                finalType = uploadedMediaType;
+            } else {
+                finalUrl = document.getElementById('mediaUrl').value.trim();
+                finalType = document.getElementById('mediaType').value;
+                if (!finalUrl) {
+                    showAlert("Please paste a valid media link!");
+                    return;
+                }
+            }
 
-        // --- Google Drive Smart Converter Logic ---
-        function getDriveId(url) {
-            // Extracts the file ID from standard Google Drive viewing/sharing links
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
             try {
-                const regex = /\/d\/([a-zA-Z0-9_-]+)/;
-                const match = url.match(regex);
-                return match ? match[1] : null;
-            } catch (e) {
-                return null;
+                const newMemory = {
+                    id: Date.now().toString(),
+                    url: finalUrl,
+                    type: finalType,
+                    caption: caption,
+                    timestamp: Date.now()
+                };
+                
+                await saveMemoryLocal(newMemory);
+
+                closeModal();
+                loadMemories(); // Refresh the gallery locally
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalBtnHtml;
+
+            } catch (err) {
+                console.error("Error saving memory:", err);
+                showAlert("Failed to save memory. If it's a super massive video, try compressing it slightly.");
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalBtnHtml;
+            }
+        });
+
+        async function loadMemories() {
+            try {
+                const memories = await loadMemoriesLocal();
+                
+                // Sort in memory by timestamp descending
+                memories.sort((a, b) => b.timestamp - a.timestamp);
+                
+                renderGallery(memories);
+            } catch (error) {
+                console.error("Error fetching memories:", error);
+                document.getElementById('loadingMemories').innerHTML = `
+                    <div class="text-red-400"><i class="fa-solid fa-circle-xmark text-3xl mb-2"></i></div>
+                    <p>Failed to load memories.</p>
+                `;
             }
         }
 
-        function processAndAddMemory() {
-            const rawUrl = document.getElementById('memory-url').value.trim();
-            const type = document.getElementById('memory-type').value;
-            let caption = document.getElementById('memory-caption').value.trim();
-            
-            if (!rawUrl) {
-                showToast("Please enter a valid link.", true);
+        function renderGallery(memories) {
+            const gallery = document.getElementById('memoriesGallery');
+            gallery.innerHTML = ""; 
+
+            if (memories.length === 0) {
+                gallery.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-panel rounded-3xl border-dashed border-2 border-sky-200">
+                        <i class="fa-solid fa-images text-5xl mb-4 text-sky-300"></i>
+                        <p class="text-xl text-sky-700 font-medium mb-2">No memories yet.</p>
+                        <p class="text-slate-500">Be the first to add a beautiful moment! 💙</p>
+                    </div>
+                `;
                 return;
             }
 
-            if (!caption) caption = "A cherished memory";
-
-            let finalSrc = rawUrl;
-            const driveId = getDriveId(rawUrl);
-            let isDrive = false;
-
-            // If it's a Google Drive link, apply the Smart Conversion
-            if (driveId) {
-                isDrive = true;
-                if (type === 'image') {
-                    // Convert drive link to direct image export link
-                    finalSrc = `https://drive.google.com/uc?export=view&id=${driveId}`;
-                } else if (type === 'video') {
-                    // Convert drive link to preview iframe link
-                    finalSrc = `https://drive.google.com/file/d/${driveId}/preview`;
-                }
-            } else {
-                // Not a recognized drive link, attempt to use as-is (e.g. imgur, direct mp4)
-                // In a production app, we would validate the URL thoroughly.
-            }
-
-            // Create new DOM element for the gallery
-            const gallery = document.getElementById('gallery-grid');
-            const memoryCard = document.createElement('div');
-            memoryCard.className = "bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-blue-100 transform hover:-translate-y-1 opacity-0";
-            
-            let mediaHtml = '';
-            
-            if (type === 'image') {
-                mediaHtml = `<img src="${finalSrc}" alt="${caption}" class="w-full h-48 object-cover bg-gray-100" onerror="this.onerror=null; this.src='https://placehold.co/600x400/f87171/ffffff?text=Image+Load+Failed';">`;
-            } else if (type === 'video') {
-                if (isDrive) {
-                    mediaHtml = `<iframe src="${finalSrc}" class="w-full h-48 border-0 bg-black" allow="autoplay"></iframe>`;
+            memories.forEach(mem => {
+                const card = document.createElement('div');
+                card.className = "bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-sky-200/50 transition-all duration-300 transform hover:-translate-y-1 border border-white";
+                
+                let mediaHtml = "";
+                if (mem.type === 'video') {
+                    mediaHtml = `
+                        <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
+                            <video src="${mem.url}" controls autoplay muted loop class="w-full h-full object-contain"></video>
+                        </div>
+                    `;
                 } else {
-                    mediaHtml = `<video src="${finalSrc}" class="w-full h-48 object-cover bg-black" controls></video>`;
+                    mediaHtml = `
+                        <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
+                            <img src="${mem.url}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                    `;
                 }
-            }
 
-            memoryCard.innerHTML = `
-                ${mediaHtml}
-                <div class="p-4">
-                    <p class="text-blue-800 font-medium">${caption}</p>
-                    <p class="text-blue-400 text-xs mt-1">Added just now</p>
-                </div>
-            `;
-
-            // Prepend to gallery
-            gallery.insertBefore(memoryCard, gallery.firstChild);
-            
-            // Trigger animation
-            setTimeout(() => {
-                memoryCard.style.opacity = '1';
-            }, 50);
-
-            // Clean up UI
-            closeModal();
-            showToast("Memory added successfully!");
+                card.innerHTML = `
+                    ${mediaHtml}
+                    <div class="p-4 bg-white">
+                        <p class="text-slate-700 font-medium text-sm">${mem.caption || "A sweet moment 💙"}</p>
+                    </div>
+                `;
+                
+                gallery.appendChild(card);
+            });
         }
     </script>
 </body>
