@@ -243,4 +243,359 @@
                 <form id="memoryForm" class="space-y-5">
                     <div class="flex gap-2 bg-sky-50 p-1.5 rounded-2xl">
                         <button type="button" id="tabUpload" class="flex-1 py-2.5 rounded-xl bg-white shadow-sm font-semibold text-sky-600 transition-all text-sm">Upload Photo</button>
-                        <button type="button" id="tabLink" class="flex-1 py-2.5 rounded-xl text-slate-50
+                        <button type="button" id="tabLink" class="flex-1 py-2.5 rounded-xl text-slate-500 hover:text-sky-600 transition-all text-sm">Paste Link</button>
+                    </div>
+
+                    <div id="uploadSection" class="space-y-4">
+                        <div class="relative border-2 border-dashed border-sky-200 rounded-2xl p-6 text-center hover:bg-sky-50 transition-colors">
+                            <input type="file" id="imageInput" accept="image/*, video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-sky-400 mb-2"></i>
+                            <p class="text-sm font-semibold text-sky-700">Tap to select a photo or video</p>
+                            <p class="text-xs text-slate-400 mt-1">Photos and videos will be saved securely.</p>
+                        </div>
+                        <div id="imagePreviewContainer" class="hidden rounded-2xl overflow-hidden border border-sky-100 h-48 flex items-center justify-center bg-slate-50 shadow-inner">
+                            <img id="imagePreview" src="" alt="Preview" class="max-h-full object-contain hidden">
+                            <video id="videoPreview" src="" controls class="max-h-full object-contain hidden"></video>
+                        </div>
+                    </div>
+
+                    <div id="linkSection" class="space-y-4 hidden">
+                        <div>
+                            <label class="block text-sm font-bold text-sky-800 mb-1.5">Media URL</label>
+                            <input type="url" id="mediaUrl" placeholder="https://..." class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-300 focus:border-sky-300 outline-none transition-all bg-sky-50/50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-sky-800 mb-1.5">Type</label>
+                            <select id="mediaType" class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50/50">
+                                <option value="image">Image</option>
+                                <option value="video">Video</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-sky-800 mb-1.5">Sweet Note / Caption</label>
+                        <textarea id="memoryCaption" rows="3" placeholder="Remember when we..." class="w-full px-4 py-3 rounded-xl border border-sky-200 focus:ring-2 focus:ring-pink-300 focus:border-pink-300 outline-none transition-all resize-none bg-sky-50/50"></textarea>
+                    </div>
+
+                    <div id="formAlert" class="hidden rounded-xl p-3 text-sm font-medium text-center"></div>
+
+                    <button type="submit" id="saveMemoryBtn" class="w-full bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-sky-200 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                        Save Memory 💙
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        function handleRouting() {
+            const hash = window.location.hash || '#home';
+            const pageId = hash.substring(1);
+            
+            const validPages = ['home', 'notes', 'edits', 'memories'];
+            const targetPage = validPages.includes(pageId) ? pageId : 'home';
+
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+            document.getElementById(targetPage).classList.add('active');
+            const activeNav = document.querySelector(`.nav-link[href="#${targetPage}"]`);
+            if(activeNav) activeNav.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('hashchange', handleRouting);
+        window.addEventListener('DOMContentLoaded', () => {
+            handleRouting();
+            loadMemories();
+        });
+
+        // Updated with your latest working App Script URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG9tRUtVcunB_TBZ6ru-AP6bigYwoLyU5IZQa6lMUq6o0a64O2WjCVgtlYISoDZsyv/exec';
+
+        const modal = document.getElementById('memoryModal');
+        const addMemoryBtn = document.getElementById('addMemoryBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const memoryForm = document.getElementById('memoryForm');
+        const formAlert = document.getElementById('formAlert');
+        
+        const tabUpload = document.getElementById('tabUpload');
+        const tabLink = document.getElementById('tabLink');
+        const uploadSection = document.getElementById('uploadSection');
+        const linkSection = document.getElementById('linkSection');
+        
+        let currentMode = 'upload'; 
+        
+        function showAlert(msg, isError = true) {
+            formAlert.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-sky-100', 'text-sky-700');
+            formAlert.classList.add(isError ? 'bg-red-100' : 'bg-sky-100');
+            formAlert.classList.add(isError ? 'text-red-700' : 'text-sky-700');
+            formAlert.innerText = msg;
+        }
+
+        function hideAlert() {
+            formAlert.classList.add('hidden');
+        }
+
+        tabUpload.addEventListener('click', () => {
+            currentMode = 'upload';
+            tabUpload.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
+            tabUpload.classList.remove('text-slate-500');
+            tabLink.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
+            tabLink.classList.add('text-slate-500');
+            uploadSection.classList.remove('hidden');
+            linkSection.classList.add('hidden');
+            hideAlert();
+        });
+
+        tabLink.addEventListener('click', () => {
+            currentMode = 'link';
+            tabLink.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
+            tabLink.classList.remove('text-slate-500');
+            tabUpload.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
+            tabUpload.classList.add('text-slate-500');
+            linkSection.classList.remove('hidden');
+            uploadSection.classList.add('hidden');
+            hideAlert();
+        });
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                memoryForm.reset();
+                document.getElementById('imagePreviewContainer').classList.add('hidden');
+                document.getElementById('imagePreview').classList.add('hidden');
+                document.getElementById('videoPreview').classList.add('hidden');
+                uploadedMediaUrl = null;
+                hideAlert();
+            }, 300);
+        }
+
+        addMemoryBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+
+        let uploadedMediaUrl = null;
+        let uploadedMediaType = 'image';
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const videoPreview = document.getElementById('videoPreview');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+
+        imageInput.addEventListener('change', (e) => {
+            hideAlert();
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const isVideo = file.type.startsWith('video/');
+
+            if (isVideo) {
+                uploadedMediaType = 'video';
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    uploadedMediaUrl = event.target.result;
+                    imagePreview.classList.add('hidden');
+                    videoPreview.src = uploadedMediaUrl;
+                    videoPreview.classList.remove('hidden');
+                    imagePreviewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                uploadedMediaType = 'image';
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const MAX_WIDTH = 800;
+                        const MAX_HEIGHT = 800;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.5);
+                        videoPreview.classList.add('hidden');
+                        imagePreview.src = uploadedMediaUrl;
+                        imagePreview.classList.remove('hidden');
+                        imagePreviewContainer.classList.remove('hidden');
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        memoryForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideAlert();
+
+            const caption = document.getElementById('memoryCaption').value.trim();
+            const saveBtn = document.getElementById('saveMemoryBtn');
+            const originalBtnHtml = saveBtn.innerHTML;
+            
+            let finalUrl = "";
+            let finalType = "image";
+
+            if (currentMode === 'upload') {
+                if (!uploadedMediaUrl) {
+                    showAlert("Please select a photo or video to upload!");
+                    return;
+                }
+                finalUrl = uploadedMediaUrl;
+                finalType = uploadedMediaType;
+            } else {
+                finalUrl = document.getElementById('mediaUrl').value.trim();
+                finalType = document.getElementById('mediaType').value;
+                if (!finalUrl) {
+                    showAlert("Please paste a valid media link!");
+                    return;
+                }
+            }
+
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+            try {
+                let base64Data = "";
+                let mimeType = "";
+                
+                if (currentMode === 'upload') {
+                    // Extract base64 correctly
+                    const parts = finalUrl.split(',');
+                    if(parts.length > 1) {
+                        mimeType = parts[0].split(':')[1].split(';')[0];
+                        base64Data = parts[1];
+                    }
+                }
+
+                const payload = {
+                    id: Date.now().toString(),
+                    type: finalType,
+                    caption: caption,
+                    timestamp: Date.now(),
+                    isFile: currentMode === 'upload',
+                    mimeType: mimeType,
+                    fileData: base64Data, 
+                    url: finalUrl 
+                };
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    redirect: 'follow', // Crucial fix for Apps Script redirects
+                    body: JSON.stringify(payload),
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    }
+                });
+
+                closeModal();
+                loadMemories(); 
+                
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalBtnHtml;
+
+            } catch (err) {
+                console.error("Error saving memory:", err);
+                showAlert("Upload failed. Try a tiny test image first!");
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalBtnHtml;
+            }
+        });
+
+        async function loadMemories() {
+            try {
+                // Add timestamp to prevent browser from loading an old cached version
+                const response = await fetch(SCRIPT_URL + "?t=" + new Date().getTime(), {
+                    redirect: 'follow'
+                });
+                
+                const memories = await response.json();
+                memories.sort((a, b) => b.timestamp - a.timestamp);
+                renderGallery(memories);
+            } catch (error) {
+                console.error("Error fetching memories:", error);
+                const gallery = document.getElementById('memoriesGallery');
+                if(gallery.children.length <= 1) { 
+                     document.getElementById('loadingMemories').innerHTML = `
+                        <div class="text-sky-400"><i class="fa-solid fa-cloud text-3xl mb-2"></i></div>
+                        <p>Waiting for memories...</p>
+                        <p class="text-sm mt-2 text-slate-500">(Your memories will appear here once saved)</p>
+                    `;
+                }
+            }
+        }
+
+        function renderGallery(memories) {
+            const gallery = document.getElementById('memoriesGallery');
+            gallery.innerHTML = ""; 
+
+            if (!memories || memories.length === 0) {
+                gallery.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-panel rounded-3xl border-dashed border-2 border-sky-200">
+                        <i class="fa-solid fa-images text-5xl mb-4 text-sky-300"></i>
+                        <p class="text-xl text-sky-700 font-medium mb-2">No memories yet.</p>
+                        <p class="text-slate-500">Be the first to add a beautiful moment! 💙</p>
+                    </div>
+                `;
+                return;
+            }
+
+            memories.forEach(mem => {
+                const card = document.createElement('div');
+                card.className = "bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-sky-200/50 transition-all duration-300 transform hover:-translate-y-1 border border-white";
+                
+                let mediaHtml = "";
+                if (mem.type === 'video') {
+                    mediaHtml = `
+                        <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
+                            <video src="${mem.url}" controls autoplay muted loop class="w-full h-full object-contain"></video>
+                        </div>
+                    `;
+                } else {
+                    mediaHtml = `
+                        <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
+                            <img src="${mem.url}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    ${mediaHtml}
+                    <div class="p-4 bg-white">
+                        <p class="text-slate-700 font-medium text-sm">${mem.caption || "A sweet moment 💙"}</p>
+                    </div>
+                `;
+                
+                gallery.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
