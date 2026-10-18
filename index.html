@@ -83,6 +83,18 @@
 </head>
 <body class="text-slate-800">
 
+    <!-- Background Music Audio Element -->
+    <audio id="bgMusic"></audio>
+
+    <!-- Music Controls UI -->
+    <div class="fixed bottom-6 right-6 z-50 glass-panel px-5 py-3 rounded-full flex items-center gap-3 shadow-lg shadow-sky-200 border border-white hover:scale-105 transition-transform duration-300">
+        <button id="muteBtn" class="text-sky-600 hover:text-sky-800 transition-colors w-6 flex justify-center outline-none">
+            <i class="fa-solid fa-volume-high text-lg"></i>
+        </button>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.3" class="w-20 md:w-24 accent-sky-500 cursor-pointer outline-none">
+        <i class="fa-solid fa-music text-sky-400 text-sm ml-1 opacity-70 animate-pulse"></i>
+    </div>
+
     <div class="fixed top-20 left-10 text-6xl floating opacity-70 z-0 pointer-events-none">🐱</div>
     <div class="fixed top-40 right-16 text-6xl floating-delay opacity-70 z-0 pointer-events-none">🐶</div>
     <div class="fixed bottom-32 left-20 text-5xl floating opacity-70 z-0 pointer-events-none">🐾</div>
@@ -174,12 +186,11 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <!-- Edit 1 -->
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100">
                     <div class="aspect-video bg-sky-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-sky-200">
                         <i class="fa-solid fa-play text-5xl text-sky-300 absolute z-0 animate-pulse"></i>
                         <video controls class="w-full h-full object-cover relative z-10" poster="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80">
-                            <source src="VID_20261002_182518_464.mp4" type="video/mp4">
+                            <source src="lv_7534194593168985397_20260920133431.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -187,12 +198,11 @@
                     <p class="text-slate-600 font-medium">Just a little edit I made of some of my favorite moments with you.</p>
                 </div>
                 
-                <!-- Edit 2 -->
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-pink-50/60">
                     <div class="aspect-video bg-pink-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-pink-200">
                         <i class="fa-solid fa-play text-5xl text-pink-300 absolute z-0 animate-pulse"></i>
                         <video controls class="w-full h-full object-cover relative z-10" poster="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80">
-                            <source src="lv_7072254278659869953_20260930232148.mp4" type="video/mp4">
+                            <source src="lv_7677856459220241684_20260920130210.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -200,12 +210,11 @@
                     <p class="text-slate-600 font-medium">To celebrate the most amazing girlfriend turning 18 today!</p>
                 </div>
 
-                <!-- Edit 3 (New) -->
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-purple-50/60">
                     <div class="aspect-video bg-purple-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-purple-200">
                         <i class="fa-solid fa-play text-5xl text-purple-300 absolute z-0 animate-pulse"></i>
                         <video controls class="w-full h-full object-cover relative z-10" >
-                            <source src="lv_7534194593168985397_20260920133431.mp4" type="video/mp4">
+                            <source src="lv_7603521201796959505_20260920134942.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -213,7 +222,18 @@
                     <p class="text-slate-600 font-medium">Just looking at you makes my entire day better.</p>
                 </div>
 
-                <!-- Edit 4 (New) -->
+                <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-indigo-50/60">
+                    <div class="aspect-video bg-indigo-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-indigo-200">
+                        <i class="fa-solid fa-play text-5xl text-indigo-300 absolute z-0 animate-pulse"></i>
+                        <video controls class="w-full h-full object-cover relative z-10" >
+                            <source src="VID_20261002_182518_464.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h3 class="text-2xl text-sky-900 mb-2 font-bold cursive-text">Precious Moments 💫</h3>
+                    <p class="text-slate-600 font-medium">I want to remember these little moments forever.</p>
+                </div>
+
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-indigo-50/60">
                     <div class="aspect-video bg-indigo-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-indigo-200">
                         <i class="fa-solid fa-play text-5xl text-indigo-300 absolute z-0 animate-pulse"></i>
@@ -225,24 +245,12 @@
                     <h3 class="text-2xl text-sky-900 mb-2 font-bold cursive-text">Precious Moments 💫</h3>
                     <p class="text-slate-600 font-medium">I want to remember these little moments forever.</p>
                 </div>
-                <!-- Edit 5 (New) -->
- <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-indigo-50/60">
-                    <div class="aspect-video bg-indigo-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-indigo-200">
-                        <i class="fa-solid fa-play text-5xl text-indigo-300 absolute z-0 animate-pulse"></i>
-                        <video controls class="w-full h-full object-cover relative z-10" >
-                            <source src="lv_7650925693236251921_20260920133921.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <h3 class="text-2xl text-sky-900 mb-2 font-bold cursive-text">Precious Moments 💫</h3>
-                    <p class="text-slate-600 font-medium">I want to remember these little moments forever.</p>
-                </div>
-                <!-- Edit 6 (New) -->
+
                 <div class="glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 shadow-lg shadow-sky-100 bg-gradient-to-br from-white/40 to-teal-50/60 md:col-span-2 lg:col-span-1 max-w-lg mx-auto w-full">
                     <div class="aspect-video bg-teal-100 rounded-2xl overflow-hidden mb-4 relative flex items-center justify-center border-2 border-teal-200">
                         <i class="fa-solid fa-play text-5xl text-teal-300 absolute z-0 animate-pulse"></i>
                         <video controls class="w-full h-full object-cover relative z-10">
-                            <source src="lv_7677856459220241684_20260920130210.mp4" type="video/mp4">
+                            <source src="lv_7072254278659869953_20260930232148.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -341,342 +349,438 @@
     </div>
 
     <script>
-        window.onerror = function(message, source, lineno, colno, error) {
-            alert("CRASH DETECTED!\nLine: " + lineno + "\nError: " + message);
-            return true; 
-        };
-
-        function handleRouting() {
-            const hash = window.location.hash || '#home';
-            const pageId = hash.substring(1);
+        // Wait until everything is fully loaded before trying to run the code
+        document.addEventListener('DOMContentLoaded', () => {
             
-            const validPages = ['home', 'notes', 'edits', 'memories'];
-            const targetPage = validPages.includes(pageId) ? pageId : 'home';
+            // --- Music Playlist Logic ---
+            const bgMusic = document.getElementById('bgMusic');
+            const muteBtn = document.getElementById('muteBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const muteIcon = muteBtn ? muteBtn.querySelector('i') : null;
 
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-
-            const targetEl = document.getElementById(targetPage);
-            if(targetEl) targetEl.classList.add('active');
+            // ADD YOUR 20 SONGS HERE! 
+            const playlist = [
+                "song1.mp3",
+                "song2.mp3",
+                "song3.mp3",
+                "song4.mp3",
+                "song5.mp3",
+                "song6.mp3",
+                "song7.mp3",
+                "song8.mp3",
+                "song9.mp3",
+                "song10.mp3",
+                "song11.mp3",
+                "song12.mp3",
+                "song13.mp3",
+                "song14.mp3",
+                "song15.mp3",
+                "song16.mp3",
+                "song17.mp3",
+                "song18.mp3",
+                "song19.mp3",
+                "song20.mp3"
+            ];
             
-            const activeNav = document.querySelector(`.nav-link[href="#${targetPage}"]`);
-            if(activeNav) activeNav.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+            let currentSongIndex = 0;
 
-        window.addEventListener('hashchange', handleRouting);
-        window.addEventListener('DOMContentLoaded', () => {
-            handleRouting();
-            loadMemories();
-        });
-
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG9tRUtVcunB_TBZ6ru-AP6bigYwoLyU5IZQa6lMUq6o0a64O2WjCVgtlYISoDZsyv/exec';
-
-        const modal = document.getElementById('memoryModal');
-        const addMemoryBtn = document.getElementById('addMemoryBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const memoryForm = document.getElementById('memoryForm');
-        const formAlert = document.getElementById('formAlert');
-        
-        const tabUpload = document.getElementById('tabUpload');
-        const tabLink = document.getElementById('tabLink');
-        const uploadSection = document.getElementById('uploadSection');
-        const linkSection = document.getElementById('linkSection');
-        
-        let currentMode = 'upload'; 
-        
-        function showAlert(msg, isError = true) {
-            formAlert.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-sky-100', 'text-sky-700');
-            formAlert.classList.add(isError ? 'bg-red-100' : 'bg-sky-100');
-            formAlert.classList.add(isError ? 'text-red-700' : 'text-sky-700');
-            formAlert.innerText = msg;
-        }
-
-        function hideAlert() {
-            formAlert.classList.add('hidden');
-        }
-
-        tabUpload.addEventListener('click', () => {
-            currentMode = 'upload';
-            tabUpload.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
-            tabUpload.classList.remove('text-slate-500');
-            tabLink.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
-            tabLink.classList.add('text-slate-500');
-            uploadSection.classList.remove('hidden');
-            linkSection.classList.add('hidden');
-            hideAlert();
-        });
-
-        tabLink.addEventListener('click', () => {
-            currentMode = 'link';
-            tabLink.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
-            tabLink.classList.remove('text-slate-500');
-            tabUpload.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
-            tabUpload.classList.add('text-slate-500');
-            linkSection.classList.remove('hidden');
-            uploadSection.classList.add('hidden');
-            hideAlert();
-        });
-
-        function openModal() {
-            modal.classList.remove('hidden');
-            setTimeout(() => modal.classList.remove('opacity-0'), 10);
-        }
-
-        function closeModal() {
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                memoryForm.reset();
-                document.getElementById('imagePreviewContainer').classList.add('hidden');
-                document.getElementById('imagePreview').classList.add('hidden');
-                document.getElementById('videoPreview').classList.add('hidden');
-                uploadedMediaUrl = null;
-                hideAlert();
-            }, 300);
-        }
-
-        addMemoryBtn.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if(e.target === modal) closeModal();
-        });
-
-        let uploadedMediaUrl = null;
-        let uploadedMediaType = 'image';
-        const imageInput = document.getElementById('imageInput');
-        const imagePreview = document.getElementById('imagePreview');
-        const videoPreview = document.getElementById('videoPreview');
-        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-
-        imageInput.addEventListener('change', (e) => {
-            hideAlert();
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const isVideo = file.type.startsWith('video/');
-
-            if (isVideo) {
-                uploadedMediaType = 'video';
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    uploadedMediaUrl = event.target.result;
-                    imagePreview.classList.add('hidden');
-                    videoPreview.src = uploadedMediaUrl;
-                    videoPreview.classList.remove('hidden');
-                    imagePreviewContainer.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            } else {
-                uploadedMediaType = 'image';
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const MAX_WIDTH = 800;
-                        const MAX_HEIGHT = 800;
-                        let width = img.width;
-                        let height = img.height;
-
-                        if (width > height) {
-                            if (width > MAX_WIDTH) {
-                                height *= MAX_WIDTH / width;
-                                width = MAX_WIDTH;
-                            }
-                        } else {
-                            if (height > MAX_HEIGHT) {
-                                width *= MAX_HEIGHT / height;
-                                height = MAX_HEIGHT;
-                            }
-                        }
-
-                        const canvas = document.createElement('canvas');
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.5);
-                        videoPreview.classList.add('hidden');
-                        imagePreview.src = uploadedMediaUrl;
-                        imagePreview.classList.remove('hidden');
-                        imagePreviewContainer.classList.remove('hidden');
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        memoryForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            hideAlert();
-
-            const caption = document.getElementById('memoryCaption').value.trim();
-            const saveBtn = document.getElementById('saveMemoryBtn');
-            const originalBtnHtml = saveBtn.innerHTML;
-            
-            let finalUrl = "";
-            let finalType = "image";
-
-            if (currentMode === 'upload') {
-                if (!uploadedMediaUrl) {
-                    showAlert("Please select a photo or video to upload!");
-                    return;
-                }
-                finalUrl = uploadedMediaUrl;
-                finalType = uploadedMediaType;
-            } else {
-                finalUrl = document.getElementById('mediaUrl').value.trim();
-                finalType = document.getElementById('mediaType').value;
-                if (!finalUrl) {
-                    showAlert("Please paste a valid media link!");
-                    return;
-                }
+            function playCurrentSong() {
+                if(!bgMusic) return;
+                bgMusic.src = playlist[currentSongIndex];
+                bgMusic.play().catch(e => console.log("Audio autoplay prevented by browser."));
             }
 
-            saveBtn.disabled = true;
-            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-
-            try {
-                let base64Data = "";
-                let mimeType = "";
-                
-                if (currentMode === 'upload') {
-                    const parts = finalUrl.split(',');
-                    if(parts.length > 1) {
-                        mimeType = parts[0].split(':')[1].split(';')[0];
-                        base64Data = parts[1];
+            if(bgMusic && volumeSlider && muteBtn) {
+                bgMusic.addEventListener('ended', () => {
+                    currentSongIndex++;
+                    if (currentSongIndex >= playlist.length) {
+                        currentSongIndex = 0; 
                     }
-                }
-
-                const payload = {
-                    id: Date.now().toString(),
-                    type: finalType,
-                    caption: caption,
-                    timestamp: Date.now(),
-                    isFile: currentMode === 'upload',
-                    mimeType: mimeType,
-                    fileData: base64Data, 
-                    url: finalUrl 
-                };
-                
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    redirect: 'follow',
-                    body: JSON.stringify(payload),
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8'
-                    }
+                    playCurrentSong();
                 });
 
-                closeModal();
-                loadMemories(); 
-                
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = originalBtnHtml;
+                bgMusic.volume = volumeSlider.value;
 
-            } catch (err) {
-                console.error("Error saving memory:", err);
-                showAlert("Upload failed. Try a tiny test image first!");
-                saveBtn.disabled = false;
-                saveBtn.innerHTML = originalBtnHtml;
-            }
-        });
+                document.body.addEventListener('click', function startMusic() {
+                    playCurrentSong();
+                    document.body.removeEventListener('click', startMusic);
+                }, { once: true });
 
-        async function loadMemories() {
-            try {
-                const response = await fetch(SCRIPT_URL + "?t=" + new Date().getTime(), {
-                    redirect: 'follow'
-                });
-                
-                const memories = await response.json();
-                memories.sort((a, b) => b.timestamp - a.timestamp);
-                renderGallery(memories);
-            } catch (error) {
-                console.error("Error fetching memories:", error);
-                const gallery = document.getElementById('memoriesGallery');
-                if(gallery && gallery.children.length <= 1) { 
-                     document.getElementById('loadingMemories').innerHTML = `
-                        <div class="text-sky-400"><i class="fa-solid fa-cloud text-3xl mb-2"></i></div>
-                        <p>Waiting for memories...</p>
-                        <p class="text-sm mt-2 text-slate-500">(Your memories will appear here once saved)</p>
-                    `;
-                }
-            }
-        }
-
-        function renderGallery(memories) {
-            const gallery = document.getElementById('memoriesGallery');
-            if (!gallery) return;
-            
-            gallery.innerHTML = ""; 
-
-            if (!memories || memories.length === 0) {
-                gallery.innerHTML = `
-                    <div class="col-span-full text-center py-12 glass-panel rounded-3xl border-dashed border-2 border-sky-200">
-                        <i class="fa-solid fa-images text-5xl mb-4 text-sky-300"></i>
-                        <p class="text-xl text-sky-700 font-medium mb-2">No memories yet.</p>
-                        <p class="text-slate-500">Be the first to add a beautiful moment! 💙</p>
-                    </div>
-                `;
-                return;
-            }
-
-            memories.forEach(mem => {
-                const card = document.createElement('div');
-                card.className = "bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-sky-200/50 transition-all duration-300 transform hover:-translate-y-1 border border-white";
-                
-                let mediaHtml = "";
-                
-                if (mem.type === 'video') {
-                    let videoSrc = String(mem.url || ""); 
-                    let isDrive = videoSrc.includes('drive.google.com');
-                    
-                    if (isDrive) {
-                        const idMatch = videoSrc.match(/id=([a-zA-Z0-9_-]+)/) || videoSrc.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                        if (idMatch && idMatch[1]) {
-                            videoSrc = `https://drive.google.com/file/d/${idMatch[1]}/preview`;
-                        }
-                        mediaHtml = `
-                            <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative w-full overflow-hidden">
-                                <iframe src="${videoSrc}" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen"></iframe>
-                            </div>
-                        `;
+                volumeSlider.addEventListener('input', (e) => {
+                    bgMusic.volume = e.target.value;
+                    if (bgMusic.volume === 0) {
+                        bgMusic.muted = true;
+                        if(muteIcon) muteIcon.className = 'fa-solid fa-volume-xmark text-lg';
                     } else {
-                        mediaHtml = `
-                            <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
-                                <video src="${videoSrc}" controls class="w-full h-full object-contain"></video>
-                            </div>
-                        `;
+                        bgMusic.muted = false;
+                        if(muteIcon) {
+                            muteIcon.className = bgMusic.volume < 0.5 ? 'fa-solid fa-volume-low text-lg' : 'fa-solid fa-volume-high text-lg';
+                        }
                     }
-                } else {
-                    let imgSrc = String(mem.url || "https://placehold.co/400x500/bae6fd/0369a1?text=Memory");
-                    mediaHtml = `
-                        <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
-                            <img src="${imgSrc}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                });
+
+                muteBtn.addEventListener('click', () => {
+                    bgMusic.muted = !bgMusic.muted;
+                    if (bgMusic.muted || bgMusic.volume === 0) {
+                        if(muteIcon) muteIcon.className = 'fa-solid fa-volume-xmark text-lg';
+                    } else {
+                        if(muteIcon) {
+                            muteIcon.className = bgMusic.volume < 0.5 ? 'fa-solid fa-volume-low text-lg' : 'fa-solid fa-volume-high text-lg';
+                        }
+                    }
+                });
+            }
+            // --------------------------
+
+            // --- Routing Logic ---
+            function handleRouting() {
+                const hash = window.location.hash || '#home';
+                const pageId = hash.substring(1);
+                
+                const validPages = ['home', 'notes', 'edits', 'memories'];
+                const targetPage = validPages.includes(pageId) ? pageId : 'home';
+
+                document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+                const targetEl = document.getElementById(targetPage);
+                if(targetEl) targetEl.classList.add('active');
+                
+                const activeNav = document.querySelector(`.nav-link[href="#${targetPage}"]`);
+                if(activeNav) activeNav.classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            window.addEventListener('hashchange', handleRouting);
+            handleRouting();
+
+            // --- Memories Logic ---
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG9tRUtVcunB_TBZ6ru-AP6bigYwoLyU5IZQa6lMUq6o0a64O2WjCVgtlYISoDZsyv/exec';
+
+            const modal = document.getElementById('memoryModal');
+            const addMemoryBtn = document.getElementById('addMemoryBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const memoryForm = document.getElementById('memoryForm');
+            const formAlert = document.getElementById('formAlert');
+            
+            const tabUpload = document.getElementById('tabUpload');
+            const tabLink = document.getElementById('tabLink');
+            const uploadSection = document.getElementById('uploadSection');
+            const linkSection = document.getElementById('linkSection');
+            
+            let currentMode = 'upload'; 
+            
+            function showAlert(msg, isError = true) {
+                if(!formAlert) return;
+                formAlert.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-sky-100', 'text-sky-700');
+                formAlert.classList.add(isError ? 'bg-red-100' : 'bg-sky-100');
+                formAlert.classList.add(isError ? 'text-red-700' : 'text-sky-700');
+                formAlert.innerText = msg;
+            }
+
+            function hideAlert() {
+                if(formAlert) formAlert.classList.add('hidden');
+            }
+
+            if(tabUpload && tabLink) {
+                tabUpload.addEventListener('click', () => {
+                    currentMode = 'upload';
+                    tabUpload.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
+                    tabUpload.classList.remove('text-slate-500');
+                    tabLink.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
+                    tabLink.classList.add('text-slate-500');
+                    if(uploadSection) uploadSection.classList.remove('hidden');
+                    if(linkSection) linkSection.classList.add('hidden');
+                    hideAlert();
+                });
+
+                tabLink.addEventListener('click', () => {
+                    currentMode = 'link';
+                    tabLink.classList.add('bg-white', 'shadow-sm', 'text-sky-600');
+                    tabLink.classList.remove('text-slate-500');
+                    tabUpload.classList.remove('bg-white', 'shadow-sm', 'text-sky-600');
+                    tabUpload.classList.add('text-slate-500');
+                    if(linkSection) linkSection.classList.remove('hidden');
+                    if(uploadSection) uploadSection.classList.add('hidden');
+                    hideAlert();
+                });
+            }
+
+            function openModal() {
+                if(modal) {
+                    modal.classList.remove('hidden');
+                    setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                }
+            }
+
+            function closeModal() {
+                if(modal) {
+                    modal.classList.add('opacity-0');
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        if(memoryForm) memoryForm.reset();
+                        const ipc = document.getElementById('imagePreviewContainer');
+                        const ip = document.getElementById('imagePreview');
+                        const vp = document.getElementById('videoPreview');
+                        if(ipc) ipc.classList.add('hidden');
+                        if(ip) ip.classList.add('hidden');
+                        if(vp) vp.classList.add('hidden');
+                        uploadedMediaUrl = null;
+                        hideAlert();
+                    }, 300);
+                }
+            }
+
+            if(addMemoryBtn) addMemoryBtn.addEventListener('click', openModal);
+            if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+            if(modal) modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModal();
+            });
+
+            let uploadedMediaUrl = null;
+            let uploadedMediaType = 'image';
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const videoPreview = document.getElementById('videoPreview');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+
+            if(imageInput) {
+                imageInput.addEventListener('change', (e) => {
+                    hideAlert();
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const isVideo = file.type.startsWith('video/');
+
+                    if (isVideo) {
+                        uploadedMediaType = 'video';
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            uploadedMediaUrl = event.target.result;
+                            if(imagePreview) imagePreview.classList.add('hidden');
+                            if(videoPreview) {
+                                videoPreview.src = uploadedMediaUrl;
+                                videoPreview.classList.remove('hidden');
+                            }
+                            if(imagePreviewContainer) imagePreviewContainer.classList.remove('hidden');
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        uploadedMediaType = 'image';
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            const img = new Image();
+                            img.onload = () => {
+                                const MAX_WIDTH = 800;
+                                const MAX_HEIGHT = 800;
+                                let width = img.width;
+                                let height = img.height;
+
+                                if (width > height) {
+                                    if (width > MAX_WIDTH) {
+                                        height *= MAX_WIDTH / width;
+                                        width = MAX_WIDTH;
+                                    }
+                                } else {
+                                    if (height > MAX_HEIGHT) {
+                                        width *= MAX_HEIGHT / height;
+                                        height = MAX_HEIGHT;
+                                    }
+                                }
+
+                                const canvas = document.createElement('canvas');
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+
+                                uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.5);
+                                if(videoPreview) videoPreview.classList.add('hidden');
+                                if(imagePreview) {
+                                    imagePreview.src = uploadedMediaUrl;
+                                    imagePreview.classList.remove('hidden');
+                                }
+                                if(imagePreviewContainer) imagePreviewContainer.classList.remove('hidden');
+                            };
+                            img.src = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            if(memoryForm) {
+                memoryForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    hideAlert();
+
+                    const caption = document.getElementById('memoryCaption').value.trim();
+                    const saveBtn = document.getElementById('saveMemoryBtn');
+                    const originalBtnHtml = saveBtn.innerHTML;
+                    
+                    let finalUrl = "";
+                    let finalType = "image";
+
+                    if (currentMode === 'upload') {
+                        if (!uploadedMediaUrl) {
+                            showAlert("Please select a photo or video to upload!");
+                            return;
+                        }
+                        finalUrl = uploadedMediaUrl;
+                        finalType = uploadedMediaType;
+                    } else {
+                        finalUrl = document.getElementById('mediaUrl').value.trim();
+                        finalType = document.getElementById('mediaType').value;
+                        if (!finalUrl) {
+                            showAlert("Please paste a valid media link!");
+                            return;
+                        }
+                    }
+
+                    saveBtn.disabled = true;
+                    saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+                    try {
+                        let base64Data = "";
+                        let mimeType = "";
+                        
+                        if (currentMode === 'upload') {
+                            const parts = finalUrl.split(',');
+                            if(parts.length > 1) {
+                                mimeType = parts[0].split(':')[1].split(';')[0];
+                                base64Data = parts[1];
+                            }
+                        }
+
+                        const payload = {
+                            id: Date.now().toString(),
+                            type: finalType,
+                            caption: caption,
+                            timestamp: Date.now(),
+                            isFile: currentMode === 'upload',
+                            mimeType: mimeType,
+                            fileData: base64Data, 
+                            url: finalUrl 
+                        };
+                        
+                        const response = await fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            redirect: 'follow',
+                            body: JSON.stringify(payload),
+                            headers: {
+                                'Content-Type': 'text/plain;charset=utf-8'
+                            }
+                        });
+
+                        closeModal();
+                        loadMemories(); 
+                        
+                        saveBtn.disabled = false;
+                        saveBtn.innerHTML = originalBtnHtml;
+
+                    } catch (err) {
+                        console.error("Error saving memory:", err);
+                        showAlert("Upload failed. Try a tiny test image first!");
+                        saveBtn.disabled = false;
+                        saveBtn.innerHTML = originalBtnHtml;
+                    }
+                });
+            }
+
+            async function loadMemories() {
+                try {
+                    const response = await fetch(SCRIPT_URL + "?t=" + new Date().getTime(), {
+                        redirect: 'follow'
+                    });
+                    
+                    const memories = await response.json();
+                    memories.sort((a, b) => b.timestamp - a.timestamp);
+                    renderGallery(memories);
+                } catch (error) {
+                    console.error("Error fetching memories:", error);
+                    const gallery = document.getElementById('memoriesGallery');
+                    if(gallery && gallery.children.length <= 1) { 
+                        const lm = document.getElementById('loadingMemories');
+                        if(lm) {
+                            lm.innerHTML = `
+                                <div class="text-sky-400"><i class="fa-solid fa-cloud text-3xl mb-2"></i></div>
+                                <p>Waiting for memories...</p>
+                                <p class="text-sm mt-2 text-slate-500">(Your memories will appear here once saved)</p>
+                            `;
+                        }
+                    }
+                }
+            }
+
+            function renderGallery(memories) {
+                const gallery = document.getElementById('memoriesGallery');
+                if (!gallery) return;
+                
+                gallery.innerHTML = ""; 
+
+                if (!memories || memories.length === 0) {
+                    gallery.innerHTML = `
+                        <div class="col-span-full text-center py-12 glass-panel rounded-3xl border-dashed border-2 border-sky-200">
+                            <i class="fa-solid fa-images text-5xl mb-4 text-sky-300"></i>
+                            <p class="text-xl text-sky-700 font-medium mb-2">No memories yet.</p>
+                            <p class="text-slate-500">Be the first to add a beautiful moment! 💙</p>
                         </div>
                     `;
+                    return;
                 }
 
-                card.innerHTML = `
-                    ${mediaHtml}
-                    <div class="p-4 bg-white">
-                        <p class="text-slate-700 font-medium text-sm">${mem.caption || "A sweet moment 💙"}</p>
-                    </div>
-                `;
-                
-                gallery.appendChild(card);
-            });
-        }
-        
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            handleRouting();
+                memories.forEach(mem => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-sky-200/50 transition-all duration-300 transform hover:-translate-y-1 border border-white";
+                    
+                    let mediaHtml = "";
+                    
+                    if (mem.type === 'video') {
+                        let videoSrc = String(mem.url || ""); 
+                        let isDrive = videoSrc.includes('drive.google.com');
+                        
+                        if (isDrive) {
+                            const idMatch = videoSrc.match(/id=([a-zA-Z0-9_-]+)/) || videoSrc.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                            if (idMatch && idMatch[1]) {
+                                videoSrc = `https://drive.google.com/file/d/${idMatch[1]}/preview`;
+                            }
+                            mediaHtml = `
+                                <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative w-full overflow-hidden">
+                                    <iframe src="${videoSrc}" class="w-full h-full border-0 absolute inset-0" allow="autoplay; fullscreen"></iframe>
+                                </div>
+                            `;
+                        } else {
+                            mediaHtml = `
+                                <div class="aspect-[4/5] bg-slate-900 flex items-center justify-center relative">
+                                    <video src="${videoSrc}" controls class="w-full h-full object-contain"></video>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        let imgSrc = String(mem.url || "https://placehold.co/400x500/bae6fd/0369a1?text=Memory");
+                        mediaHtml = `
+                            <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
+                                <img src="${imgSrc}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        `;
+                    }
+
+                    card.innerHTML = `
+                        ${mediaHtml}
+                        <div class="p-4 bg-white">
+                            <p class="text-slate-700 font-medium text-sm">${mem.caption || "A sweet moment 💙"}</p>
+                        </div>
+                    `;
+                    
+                    gallery.appendChild(card);
+                });
+            }
+            
+            // Kickstart the memory loading process
             loadMemories();
-        }
+        });
     </script>
 </body>
 </html>
-
