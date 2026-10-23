@@ -88,8 +88,14 @@
 
     <!-- Music Controls UI -->
     <div class="fixed bottom-6 right-6 z-50 glass-panel px-5 py-3 rounded-full flex items-center gap-3 shadow-lg shadow-sky-200 border border-white hover:scale-105 transition-transform duration-300">
+        <button id="prevBtn" class="text-sky-600 hover:text-sky-800 transition-colors w-6 flex justify-center outline-none">
+            <i class="fa-solid fa-backward-step text-lg"></i>
+        </button>
         <button id="muteBtn" class="text-sky-600 hover:text-sky-800 transition-colors w-6 flex justify-center outline-none">
             <i class="fa-solid fa-volume-high text-lg"></i>
+        </button>
+        <button id="nextBtn" class="text-sky-600 hover:text-sky-800 transition-colors w-6 flex justify-center outline-none">
+            <i class="fa-solid fa-forward-step text-lg"></i>
         </button>
         <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.3" class="w-20 md:w-24 accent-sky-500 cursor-pointer outline-none">
         <i class="fa-solid fa-music text-sky-400 text-sm ml-1 opacity-70 animate-pulse"></i>
@@ -292,6 +298,7 @@
         </section>
     </main>
 
+    <!-- Upload Memory Modal -->
     <div id="memoryModal" class="fixed inset-0 bg-sky-900/40 z-50 hidden flex justify-center items-center backdrop-blur-md px-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white/90 rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] border border-white">
             <div class="bg-gradient-to-r from-sky-100 to-blue-50 p-6 flex justify-between items-center border-b border-sky-100">
@@ -348,6 +355,14 @@
         </div>
     </div>
 
+    <!-- NEW: Full Screen Lightbox Modal for Images -->
+    <div id="lightboxModal" class="fixed inset-0 bg-slate-900/95 z-[100] hidden flex justify-center items-center opacity-0 transition-opacity duration-300 backdrop-blur-sm">
+        <button onclick="window.closeLightbox()" class="absolute top-6 right-6 text-white/70 hover:text-white text-4xl transition-colors z-[110] outline-none">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img id="lightboxImg" src="" class="max-w-[95vw] max-h-[95vh] object-contain rounded-lg shadow-2xl cursor-pointer" onclick="window.closeLightbox()">
+    </div>
+
     <script>
         // Wait until everything is fully loaded before trying to run the code
         document.addEventListener('DOMContentLoaded', () => {
@@ -355,6 +370,8 @@
             // --- Music Playlist Logic ---
             const bgMusic = document.getElementById('bgMusic');
             const muteBtn = document.getElementById('muteBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
             const volumeSlider = document.getElementById('volumeSlider');
             const muteIcon = muteBtn ? muteBtn.querySelector('i') : null;
 
@@ -428,6 +445,26 @@
                         }
                     }
                 });
+
+                if(nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        currentSongIndex++;
+                        if (currentSongIndex >= playlist.length) {
+                            currentSongIndex = 0; 
+                        }
+                        playCurrentSong();
+                    });
+                }
+
+                if(prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        currentSongIndex--;
+                        if (currentSongIndex < 0) {
+                            currentSongIndex = playlist.length - 1; 
+                        }
+                        playCurrentSong();
+                    });
+                }
             }
             // --------------------------
 
@@ -453,6 +490,30 @@
 
             window.addEventListener('hashchange', handleRouting);
             handleRouting();
+
+
+            // --- Full Screen Lightbox Logic ---
+            window.openLightbox = function(src) {
+                const modal = document.getElementById('lightboxModal');
+                const img = document.getElementById('lightboxImg');
+                if(modal && img) {
+                    img.src = src;
+                    modal.classList.remove('hidden');
+                    setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                }
+            };
+
+            window.closeLightbox = function() {
+                const modal = document.getElementById('lightboxModal');
+                if(modal) {
+                    modal.classList.add('opacity-0');
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        document.getElementById('lightboxImg').src = '';
+                    }, 300);
+                }
+            };
+
 
             // --- Memories Logic ---
             const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG9tRUtVcunB_TBZ6ru-AP6bigYwoLyU5IZQa6lMUq6o0a64O2WjCVgtlYISoDZsyv/exec';
@@ -571,7 +632,6 @@
                         reader.onload = (event) => {
                             const img = new Image();
                             img.onload = () => {
-                                // REDUCED RESOLUTION TO FIX SHEETS 50K LIMIT CRASH
                                 const MAX_WIDTH = 400; 
                                 const MAX_HEIGHT = 400;
                                 let width = img.width;
@@ -595,7 +655,6 @@
                                 const ctx = canvas.getContext('2d');
                                 ctx.drawImage(img, 0, 0, width, height);
 
-                                // REDUCED QUALITY TO FIX SHEETS 50K LIMIT CRASH
                                 uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.4);
                                 if(videoPreview) videoPreview.classList.add('hidden');
                                 if(imagePreview) {
@@ -761,19 +820,21 @@
                     } else {
                         let imgSrc = String(mem.url || "https://placehold.co/400x500/bae6fd/0369a1?text=Memory");
                         
-                        // NEW FIX FOR GOOGLE DRIVE PHOTO LINKS
                         if (imgSrc.includes('drive.google.com')) {
                             const idMatch = imgSrc.match(/id=([a-zA-Z0-9_-]+)/) || imgSrc.match(/\/d\/([a-zA-Z0-9_-]+)/);
                             if (idMatch && idMatch[1]) {
-                                // Uses thumbnail endpoint which bypasses Drive embedding blocks
                                 imgSrc = `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w800`;
                             }
                         }
 
+                        // NEW: Added cursor-pointer, the onclick event for full screen, and an expand icon on hover
                         mediaHtml = `
-                            <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
+                            <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group cursor-pointer" onclick="window.openLightbox('${imgSrc}')">
                                 <img src="${imgSrc}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-sky-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <i class="fa-solid fa-expand text-white text-sm"></i>
+                                </div>
                             </div>
                         `;
                     }
