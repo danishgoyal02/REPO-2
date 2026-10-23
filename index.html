@@ -181,7 +181,7 @@
 
         <section id="edits" class="page-section">
             <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl text-sky-800 drop-shadow-sm mb-4">Few edits you liked and made soo i gave them a permanent address </h2>
+                <h2 class="text-4xl md:text-5xl text-sky-800 drop-shadow-sm mb-4">Few edits you liked and made soo i gave them a permanent adress </h2>
                 <p class="text-xl text-sky-600 font-medium max-w-2xl mx-auto"> Hope they make you smile! 💙</p>
             </div>
             
@@ -358,11 +358,10 @@
             const volumeSlider = document.getElementById('volumeSlider');
             const muteIcon = muteBtn ? muteBtn.querySelector('i') : null;
 
-            // ADD YOUR 20 SONGS HERE! 
             const playlist = [
+                "A.R. Rahman - Tum Tak Best Lyric Video Raanjhanaa Sonam Kapoor Dhanush Javed Ali.mp3",
                 "Tere Hawale - Darshan Raval.mp3",
                 "Chaar Kadam Full Video Song PK Sushant Singh Rajput Anushka Sharma Shaan, Shreya Ghoshal.mp3",
-                "A.R. Rahman - Tum Tak Best Lyric Video Raanjhanaa Sonam Kapoor Dhanush Javed Ali.mp3",
                 "The Neighbourhood - Reflections (Official Audio).mp3",
                 "Haareya Song Meri Pyaari Bindu Ayushmann, Parineeti Arijit Singh Sachin-Jigar, Priya Saraiya.mp3",
                 "Humraah Full Song Malang Aditya R K, Disha P Anil K Kunal K Sachet T Mohit S Fusion P.mp3",
@@ -572,8 +571,9 @@
                         reader.onload = (event) => {
                             const img = new Image();
                             img.onload = () => {
-                                const MAX_WIDTH = 800;
-                                const MAX_HEIGHT = 800;
+                                // REDUCED RESOLUTION TO FIX SHEETS 50K LIMIT CRASH
+                                const MAX_WIDTH = 400; 
+                                const MAX_HEIGHT = 400;
                                 let width = img.width;
                                 let height = img.height;
 
@@ -595,7 +595,8 @@
                                 const ctx = canvas.getContext('2d');
                                 ctx.drawImage(img, 0, 0, width, height);
 
-                                uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.5);
+                                // REDUCED QUALITY TO FIX SHEETS 50K LIMIT CRASH
+                                uploadedMediaUrl = canvas.toDataURL('image/jpeg', 0.4);
                                 if(videoPreview) videoPreview.classList.add('hidden');
                                 if(imagePreview) {
                                     imagePreview.src = uploadedMediaUrl;
@@ -759,6 +760,16 @@
                         }
                     } else {
                         let imgSrc = String(mem.url || "https://placehold.co/400x500/bae6fd/0369a1?text=Memory");
+                        
+                        // NEW FIX FOR GOOGLE DRIVE PHOTO LINKS
+                        if (imgSrc.includes('drive.google.com')) {
+                            const idMatch = imgSrc.match(/id=([a-zA-Z0-9_-]+)/) || imgSrc.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                            if (idMatch && idMatch[1]) {
+                                // Uses thumbnail endpoint which bypasses Drive embedding blocks
+                                imgSrc = `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w800`;
+                            }
+                        }
+
                         mediaHtml = `
                             <div class="aspect-[4/5] overflow-hidden bg-sky-50 flex items-center justify-center relative group">
                                 <img src="${imgSrc}" onerror="this.src='https://placehold.co/400x500/bae6fd/0369a1?text=Memory'" alt="Memory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
